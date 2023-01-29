@@ -17,14 +17,14 @@ class Post extends Model
     'postable_type',
   ];
 
-  public function feedbacks()
-  {
-    return $this->morphMany(Feedback::class, 'feedbackable');
-  }
-
   public function categories()
   {
     return $this->belongsToMany(Category::class);
+  }
+
+  public function feedbacks()
+  {
+    return $this->morphMany(Feedback::class, 'feedbackable');
   }
 
   public function postable()

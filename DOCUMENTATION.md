@@ -10,3 +10,4 @@ php artisan make:model -a Feedback
 php artisan make:model -a Category
 composer require laravel/sail --dev
 php artisan sail:install
+php artisan make:migration create_category_post_table
