@@ -27,6 +27,7 @@ class User extends Authenticatable
     'name',
     'email',
     'password',
+    'permanently_banned',
   ];
 
   /**
@@ -57,6 +58,8 @@ class User extends Authenticatable
    */
   protected $appends = [
     'profile_photo_url',
+    'ban_count',
+    'is_banned',
   ];
 
   public function posts()
@@ -67,5 +70,20 @@ class User extends Authenticatable
   public function feedbacks()
   {
     return $this->morphMany(Feedback::class, 'feedbackable');
+  }
+
+  public function bans()
+  {
+    return $this->hasMany(Ban::class);
+  }
+
+  public function getBanCountAttribute()
+  {
+    return $this->bans()->count();
+  }
+
+  public function getIsBannedAttribute()
+  {
+    return $this->permanently_banned || $this->bans->last()->banned_until > now();
   }
 }

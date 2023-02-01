@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Ban;
 use App\Models\Feedback;
 use App\Models\Post;
 use App\Models\Team;
@@ -44,6 +45,15 @@ class UserFactory extends Factory
     return $this->has(
       Feedback::factory()->count($count),
       'feedbacks'
+    );
+  }
+
+
+  public function withBans($count = 3)
+  {
+    return $this->has(
+      Ban::factory()->count($count),
+      'bans'
     );
   }
 
