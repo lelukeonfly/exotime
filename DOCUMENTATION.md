@@ -11,3 +11,6 @@ php artisan make:model -a Category
 composer require laravel/sail --dev
 php artisan sail:install
 php artisan make:migration create_category_post_table
+php artisan make:model TemporaryBan --all
+php artisan make:model PermanentBan --all
+php artisan make:model UnBan --all

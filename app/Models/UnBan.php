@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class UnBan extends Model
 {
   use HasFactory;
 
-  public function post()
+  public function ban()
   {
-    return $this->morphOne(Post::class, 'postable');
+    return $this->morphOne(Ban::class, 'bannable');
   }
 }

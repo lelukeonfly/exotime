@@ -23,6 +23,7 @@ class PostFactory extends Factory
   {
     $type = rand(0, 1) === 0 ? Service::class : Demand::class;
     $postable = $this->factoryForModel($type)->create();
+
     return [
       'title' => $this->faker->word(),
       'description' => $this->faker->paragraph(),

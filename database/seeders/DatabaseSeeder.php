@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
   {
     Category::factory(10)->create();
 
-    User::factory(10)->withPosts()->create();
+    #User::factory(10)->withPosts()->create();
+    User::factory(10)->withPosts()->withBans()->create();
 
     Post::get()->map(
       fn ($post) =>

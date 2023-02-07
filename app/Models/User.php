@@ -27,6 +27,7 @@ class User extends Authenticatable
     'name',
     'email',
     'password',
+    'permanently_banned',
   ];
 
   /**
@@ -57,6 +58,10 @@ class User extends Authenticatable
    */
   protected $appends = [
     'profile_photo_url',
+    'ban_count',
+    'temporary_ban_count',
+    'permanent_ban_count',
+    'is_banned',
   ];
 
   public function posts()
@@ -67,5 +72,50 @@ class User extends Authenticatable
   public function feedbacks()
   {
     return $this->morphMany(Feedback::class, 'feedbackable');
+  }
+
+  public function bans()
+  {
+    return $this->hasMany(Ban::class)->orderBy('created_at', 'desc');
+  }
+
+  public function bannable()
+  {
+    return $this->bans()->with('bannable');
+  }
+
+  public function getBanCountAttribute()
+  {
+    return $this->bans
+      ->whereIn('bannable_type', [TemporaryBan::class, PermanentBan::class])
+      ->count();
+  }
+
+  public function getTemporaryBanCountAttribute()
+  {
+    return $this->bans
+      ->where('bannable_type', TemporaryBan::class)
+      ->count();
+  }
+
+  public function getPermanentBanCountAttribute()
+  {
+    return $this->bans
+      ->where('bannable_type', PermanentBan::class)
+      ->count();
+  }
+
+  public function getIsBannedAttribute()
+  {
+    #https://laravel.com/docs/9.x/eloquent-relationships#one-of-many-polymorphic-relations
+    if ($this->bans->first()->bannable_type == "App\Models\UnBan") {
+      return false;
+    }
+
+    if ($this->bans->first()->bannable_type == "App\Models\TemporaryBan") {
+      return $this->bans->first()->bannable->until > now();
+    }
+
+    return $this->ban_count > 0;
   }
 }

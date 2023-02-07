@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Demand extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  public function post()
+  {
+    return $this->morphOne(Post::class, 'postable');
+  }
 }
