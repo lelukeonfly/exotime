@@ -13,13 +13,9 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('bans', function (Blueprint $table) {
+    Schema::create('temporary_bans', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('user_id');
-      #$table->foreignId('admin_id');
-      $table->string('reason');
-      $table->integer('bannable_id');
-      $table->string('bannable_type');
+      $table->dateTime('until');
       $table->timestamps();
     });
   }
@@ -31,6 +27,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('bans');
+    Schema::dropIfExists('temporary_bans');
   }
 };
