@@ -86,34 +86,39 @@ class User extends Authenticatable
 
   public function getBanCountAttribute()
   {
-    return $this->bans
-      ->whereIn('bannable_type', [TemporaryBan::class, PermanentBan::class])
-      ->count();
+    return $this == auth()->user() ?
+      $this->bans
+       ->whereIn('bannable_type', [TemporaryBan::class, PermanentBan::class])
+       ->count() : null;
   }
 
   public function getTemporaryBanCountAttribute()
   {
-    return $this->bans
+    return $this == auth()->user() ?
+      $this->bans
       ->where('bannable_type', TemporaryBan::class)
-      ->count();
+      ->count() : null;
   }
 
   public function getPermanentBanCountAttribute()
   {
-    return $this->bans
+    return $this == auth()->user() ?
+      $this->bans
       ->where('bannable_type', PermanentBan::class)
-      ->count();
+      ->count() : null;
   }
 
   public function getIsBannedAttribute()
   {
     #https://laravel.com/docs/9.x/eloquent-relationships#one-of-many-polymorphic-relations
-    if ($this->bans->first()->bannable_type == "App\Models\UnBan") {
-      return false;
-    }
+    if ($this == auth()->user()) {
+      if ($this->bans->first()->bannable_type == "App\Models\UnBan") {
+        return false;
+      }
 
-    if ($this->bans->first()->bannable_type == "App\Models\TemporaryBan") {
-      return $this->bans->first()->bannable->until > now();
+      if ($this->bans->first()->bannable_type == "App\Models\TemporaryBan") {
+        return $this->bans->first()->bannable->until > now();
+      }
     }
 
     return $this->ban_count > 0;

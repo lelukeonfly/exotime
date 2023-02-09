@@ -21,7 +21,7 @@ class BanPermanent
       if (!auth()->user()) return $next($request);
 
       #$bans = $request->user()->bannable->take(config('perm_ban_after_temp'));
-      $bans = $request->user()->bannable->take(3);
+      $bans = $request->user()->bans->take(3);
 
 
       $temp3streak = true;
@@ -41,7 +41,7 @@ class BanPermanent
           'bannable_type' => 'App\Models\PermanentBan',
           'reason' => "You exceeded the amount of 3 temporary bans",
         ]);
-        $request->user()->bans()->save($ban);
+        $request->user()->bans->save($ban);
       }
 
       return $next($request);

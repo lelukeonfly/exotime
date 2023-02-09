@@ -31,6 +31,7 @@ Route::middleware([
   config('jetstream.auth_session'),
   'verified',
   'banned.redirect',
+  'ban.ban',
 ])->group(function () {
 
   Route::get('/dashboard', function () {
