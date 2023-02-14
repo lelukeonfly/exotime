@@ -41,7 +41,7 @@ class BanPermanent
           'bannable_type' => 'App\Models\PermanentBan',
           'reason' => "You exceeded the amount of 3 temporary bans",
         ]);
-        $request->user()->bans->save($ban);
+        $request->user()->bans()->save($ban);
       }
 
       return $next($request);

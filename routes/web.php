@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\BanController;
+use App\Http\Controllers\DemandController;
+use App\Http\Controllers\ServiceController;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 /*
@@ -17,12 +22,19 @@ use Inertia\Inertia;
 |
 */
 
+
+
 Route::get('/', function () {
+
   return Inertia::render('Welcome', [
     'canLogin' => Route::has('login'),
     'canRegister' => Route::has('register'),
     'laravelVersion' => Application::VERSION,
     'phpVersion' => PHP_VERSION,
+    #
+    'categorie_count' => Category::count(),
+    'user_count' => User::count(),
+    'user_online' => DB::table('sessions') ->whereNotNull('user_id') ->distinct() ->count('user_id'),
   ]);
 });
 
@@ -37,6 +49,9 @@ Route::middleware([
   Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
   })->name('dashboard');
+
+  Route::resource('services', ServiceController::class);
+  Route::resource('demands', DemandController::class);
 
   Route::get('banned', BanController::class);
 });

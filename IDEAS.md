@@ -1,16 +1,24 @@
 welcome page for everyone:
-  - this many categories exist
-  - this many users are signed up
+  - [x] this many categories exist
+  - [x] this many users are signed up
+  - [~] this many users are using the platform right now
 
 bans:
-  - temp ban 3x.
-  - perm ban -> new table .
-  - or ban is table with polymorphic relation to perm and temp.
-  - unban request -> new table with foreign key to perm ban.
+  - [x] temp ban 3x.
+  - [x] perm ban -> new table .
+  - [x] or ban is table with polymorphic relation to perm and temp.
+  - [~] unban request -> new table with foreign key to perm ban. [x] -> only new table without fkey
+  - ![] ban itself should link to any model like chat message or feedback so unban also can link to a temp or perm ban
+
+login page:
+  - [] top ranked users
+
+posts:
+  - [] update parent time from service and demand (check docs: https://laravel.com/docs/9.x/eloquent-relationships#touching-parent-timestamps) and maybe remove child timestamps
 
 admin:
 
-  manage:
+  -[] manage:
     - users
     - posts
     - categories
@@ -18,16 +26,3 @@ admin:
 
   see bad words used by users in conversation
 
-
-
-
-
-$temp = new TemporaryBan
-$temp->until = "2024-05-05 10:10:10"
-$temp->save()
-$ban = new Ban
-$ban->reason = „reason“
-$ban->bannable_id = $temp->id
-$ban->bannable_type = TemporaryBan::class
-$user = User::find(10)
-$user->bans()->save($ban)

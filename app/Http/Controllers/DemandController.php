@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDemandRequest;
 use App\Http\Requests\UpdateDemandRequest;
 use App\Models\Demand;
+use Inertia\Inertia;
 
 class DemandController extends Controller
 {
@@ -15,7 +16,9 @@ class DemandController extends Controller
      */
     public function index()
     {
-        //
+      $demands = Demand::with(['post.categories','post.user'])->get();
+
+      return Inertia::render('Demand', compact('demands'));
     }
 
     /**
