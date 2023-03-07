@@ -28,7 +28,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Services/Create');
     }
 
     /**
@@ -39,7 +39,7 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        //
+        dd('store');
     }
 
     /**
@@ -50,7 +50,6 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
     }
 
     /**
@@ -61,7 +60,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        //
+        dd('edit');
     }
 
     /**
@@ -73,7 +72,7 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        //
+        dd('update');
     }
 
     /**
@@ -84,6 +83,6 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        $service->delete();
     }
 }

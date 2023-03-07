@@ -55,3 +55,7 @@ Route::middleware([
 
   Route::get('banned', BanController::class);
 });
+
+Route::post('test/{test}', function($test){
+    return $test;
+})->name('test');
