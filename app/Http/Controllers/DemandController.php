@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDemandRequest;
+use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdateDemandRequest;
 use App\Models\Demand;
+use App\Models\Post;
 use Inertia\Inertia;
 
 class DemandController extends Controller
@@ -16,9 +18,9 @@ class DemandController extends Controller
      */
     public function index()
     {
-      $demands = Demand::with(['post.categories','post.user'])->get();
+        $demands = Post::where('postable_type', 'App\Models\Demand')->with(['postable', 'categories', 'user'])->get();
 
-      return Inertia::render('Demand', compact('demands'));
+        return Inertia::render('Demands/Index', compact('demands'));
     }
 
     /**
@@ -37,9 +39,24 @@ class DemandController extends Controller
      * @param  \App\Http\Requests\StoreDemandRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDemandRequest $request)
+    public function store(StoreDemandRequest $demandRequest, StorePostRequest $postRequest)
     {
-        //
+        $demand = new Demand([
+            'name' => $demandRequest->input('name'),
+            'duration_min' => $demandRequest->input('duration_min'),
+    ]);
+
+        $demand->save();
+
+        $post = new Post([
+            'title' => $postRequest->input('title'),
+            'description' => $postRequest->input('description'),
+            'user_id' => auth()->user()->id,
+    ]);
+
+        $post->postable()->associate($demand);
+
+        $post->save();
     }
 
     /**

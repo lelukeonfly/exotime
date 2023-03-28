@@ -18,6 +18,7 @@ return new class extends Migration
       $table->foreignId('user_id');
       $table->string('title');
       $table->text('description');
+      #images
       #maby an execution time isn't always necessary in case of offering a service
       #as it can vary from case to case
       #$table->timestamp('duration')->nullable();

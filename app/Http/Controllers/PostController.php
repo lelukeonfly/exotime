@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -15,7 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with(['postable', 'user', 'categories'])->get();
+
+        return Inertia::render('Posts/Index', compact('posts'));
     }
 
     /**
@@ -36,7 +39,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        // leave empty
     }
 
     /**
@@ -47,7 +50,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $post->load(['postable', 'categories', 'user']);
+
+        return Inertia::render('Posts/Show', compact('post'));
     }
 
     /**

@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('demands', function (Blueprint $table) {
             $table->id();
+            # for now only start and endtime -> later add multiple weekdays with each having start / stop time ...
+            $table->string('location');
+            $table->integer('duration_min');
+            $table->timestamp('starting_at')->nullable();
+            $table->timestamp('ending_at')->nullable();
             $table->timestamps();
         });
     }

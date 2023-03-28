@@ -9,6 +9,11 @@ class Service extends Model
 {
   use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'duration_min',
+    ];
+
   public function post()
   {
     return $this->morphOne(Post::class, 'postable');
