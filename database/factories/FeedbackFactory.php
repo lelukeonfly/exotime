@@ -9,16 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class FeedbackFactory extends Factory
 {
-  /**
-   * Define the model's default state.
-   *
-   * @return array<string, mixed>
-   */
-  public function definition()
-  {
-    return [
-      'rating' => rand(0, 10),
-      'feedback' => $this->faker->text(),
-    ];
-  }
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'rating' => rand(0, 10),
+            'feedback' => $this->faker->text(),
+        ];
+    }
 }

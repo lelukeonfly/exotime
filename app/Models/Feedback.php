@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedback extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  public function feedbackable()
-  {
-    return $this->morphTo();
-  }
+    public function feedbackable()
+    {
+        return $this->morphTo();
+    }
 
-  public function user()
-  {
-    return $this->belongsTo(User::class);
-  }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

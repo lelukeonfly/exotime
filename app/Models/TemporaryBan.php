@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class TemporaryBan extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  public function ban()
-  {
-    return $this->morphOne(Ban::class, 'bannable');
-  }
+    protected $fillable = [
+        'until',
+    ];
+
+    public function ban()
+    {
+        return $this->morphOne(Ban::class, 'bannable');
+    }
 }

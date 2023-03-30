@@ -7,33 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'user_id',
-    'title',
-    'description',
-    'postable_id',
-    'postable_type',
-  ];
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'postable_id',
+        'postable_type',
+    ];
 
-  public function categories()
-  {
-    return $this->belongsToMany(Category::class);
-  }
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 
-  public function feedbacks()
-  {
-    return $this->morphMany(Feedback::class, 'feedbackable');
-  }
+    public function feedbacks()
+    {
+        return $this->morphMany(Feedback::class, 'feedbackable');
+    }
 
-  public function postable()
-  {
-    return $this->morphTo();
-  }
+    public function postable()
+    {
+        return $this->morphTo();
+    }
 
-  public function user()
-  {
-    return $this->belongsTo(User::class);
-  }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

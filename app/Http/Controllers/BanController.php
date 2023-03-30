@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Inertia\Inertia;
 
 // use App\Http\Requests\StoreBanRequest;
@@ -11,15 +10,14 @@ use Inertia\Inertia;
 
 class BanController extends Controller
 {
+    public function __invoke()
+    {
+        $bans = auth()->user()->bannable;
 
-  public function __invoke()
-  {
-    $bans = auth()->user()->bannable;
+        $current = $bans->first();
 
-    $current = $bans->first();
+        $previous = $bans->except($current->id);
 
-    $previous = $bans->except($current->id);
-
-    return Inertia::render('Banned', compact('current', 'previous'));
-  }
+        return Inertia::render('Banned', compact('current', 'previous'));
+    }
 }

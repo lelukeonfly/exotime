@@ -6,31 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
-  public function up()
-  {
-    Schema::create('feedback', function (Blueprint $table) {
-      $table->id();
-      $table->foreignId('user_id');
-      $table->integer('rating')->nullable();
-      $table->text('feedback')->nullable();
-      $table->integer('feedbackable_id');
-      $table->string('feedbackable_type');
-      $table->timestamps();
-    });
-  }
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('feedback', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id');
+            $table->integer('rating')->nullable();
+            $table->text('feedback')->nullable();
+            $table->integer('feedbackable_id');
+            $table->string('feedbackable_type');
+            $table->timestamps();
+        });
+    }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-    Schema::dropIfExists('feedback');
-  }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('feedback');
+    }
 };

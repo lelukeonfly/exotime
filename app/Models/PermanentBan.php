@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class PermanentBan extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  public function ban()
-  {
-    return $this->morphOne(Ban::class, 'bannable');
-  }
+    public function ban()
+    {
+        return $this->morphOne(Ban::class, 'bannable');
+    }
 }
