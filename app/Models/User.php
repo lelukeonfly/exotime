@@ -85,36 +85,47 @@ class User extends Authenticatable
 
     public function isBanned()
     {
-        $lastBans = $this->bannable()->take(3)->get();
+        $lastBans = $this->getLastBans();
 
-        if ($lastBans->first()->bannable instanceof PermanentBan) {
+        if ($this->isPermanentlyBanned($lastBans)) {
             return true;
         }
 
         if ($lastBans->count() < 3) {
-            // check if temp ban until prop is in future
-            if ($lastBans->first()->bannable instanceof TemporaryBan) {
-                return $lastBans->first()->bannable->until > now();
-            }
-
-            // in case it is unban
-            return false;
+            return $this->isTemporarilyBanned($lastBans);
         }
 
-        //https://laravel.com/docs/10.x/collections#method-every
-        /* $isAllTempBans = $lastBans->every(fn($ban) => $ban instanceof TemporaryBan); */
-        $isAllTempBans = $lastBans->every(function ($ban) {
-            return $ban->bannable instanceof TemporaryBan;
-        });
-
-        if ($isAllTempBans) {
-            // ban user perm -> create function ban permanent
+        if ($this->isAllTempBans($lastBans)) {
             $this->banPermanent(reason: 'You exceeded the amount of 3 temporary bans');
-
             return true;
         }
 
         return $lastBans->first()->until > now();
+    }
+
+    private function getLastBans()
+    {
+        return $this->bannable()->take(3)->get();
+    }
+
+    private function isPermanentlyBanned($lastBans)
+    {
+        return $lastBans->first()->bannable instanceof PermanentBan;
+    }
+
+    private function isTemporarilyBanned($lastBans)
+    {
+        if ($lastBans->first()->bannable instanceof TemporaryBan) {
+            return $lastBans->first()->bannable->until > now();
+        }
+        return false;
+    }
+
+    private function isAllTempBans($lastBans)
+    {
+        return $lastBans->every(function ($ban) {
+            return $ban->bannable instanceof TemporaryBan;
+        });
     }
 
     public function banPermanent($reason)
