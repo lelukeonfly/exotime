@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('bans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            //$table->foreignId('admin_id');
             $table->string('reason');
             $table->integer('bannable_id');
             $table->string('bannable_type');

@@ -87,15 +87,14 @@ class User extends Authenticatable
     {
         $lastBans = $this->bannable()->take(3)->get();
 
-        if ($lastBans->first() instanceof PermanentBan) {
+        if ($lastBans->first()->bannable instanceof PermanentBan) {
             return true;
         }
 
         if ($lastBans->count() < 3) {
             // check if temp ban until prop is in future
-            if ($lastBans->first() instanceof TemporaryBan) {
-                // return until > now()
-                return $lastBans->first()->until > now();
+            if ($lastBans->first()->bannable instanceof TemporaryBan) {
+                return $lastBans->first()->bannable->until > now();
             }
 
             // in case it is unban
@@ -105,7 +104,7 @@ class User extends Authenticatable
         //https://laravel.com/docs/10.x/collections#method-every
         /* $isAllTempBans = $lastBans->every(fn($ban) => $ban instanceof TemporaryBan); */
         $isAllTempBans = $lastBans->every(function ($ban) {
-            return $ban instanceof TemporaryBan;
+            return $ban->bannable instanceof TemporaryBan;
         });
 
         if ($isAllTempBans) {
