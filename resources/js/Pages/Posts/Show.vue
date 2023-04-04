@@ -3,6 +3,7 @@ import AppLayout from '../../Layouts/AppLayout.vue';
 import Service from '../../Components/Service.vue';
 import Demand from '../../Components/Demand.vue';
 
+import {Link} from '@inertiajs/vue3';
 
 const props = defineProps({
     post: Object
@@ -10,6 +11,14 @@ const props = defineProps({
 
 </script>
 <template>
+    <div>
+    <Link :href="route('posts.index')">back</Link>
+    </div>
+
+    <div>
+    <Link :href="route('posts.edit', post)">edit</Link>
+    </div>
+
     <p>{{ post.user.username }}</p>
     <p>{{ post.created_at }}</p>
 

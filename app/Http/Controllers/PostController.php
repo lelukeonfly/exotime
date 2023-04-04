@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Inertia\Inertia;
 
@@ -63,7 +64,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $post->load(['postable', 'categories', 'user']);
+        $categories = Category::all();
+
+        return Inertia::render('Posts/Edit', compact(['post', 'categories']));
     }
 
     /**
