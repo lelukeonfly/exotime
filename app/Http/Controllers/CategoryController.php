@@ -37,9 +37,16 @@ class CategoryController extends Controller
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
+    /* public function store(StoreCategoryRequest $request) */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $category = $request->validated();
+
+        Category::create([
+            'name' => $category['name'],
+            'description' => $category['description'],
+        ]);
+
     }
 
     /**
