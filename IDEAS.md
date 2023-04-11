@@ -14,7 +14,11 @@ login page:
   - [] top ranked users
 
 posts:
+    - [] for create route make redirect to either service or demand with choice
   - [] update parent time from service and demand (check docs: https://laravel.com/docs/9.x/eloquent-relationships#touching-parent-timestamps) and maybe remove child timestamps
+
+contract:
+    - [] allow users to create a contract with services in exchange among them
 
 admin:
 

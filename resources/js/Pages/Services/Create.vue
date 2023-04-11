@@ -2,6 +2,7 @@
 import AppLayout from '../../Layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import CreateCategory from '../../Components/CreateCategory.vue';
 
 const props = defineProps({
     categories: Object
@@ -15,12 +16,7 @@ const form = useForm({
     categories: []
 })
 
-const create_category = ref('')
-//const category = "this is cat";
 
-//todo: add categories
-
-//try->//https://larainfo.com/blogs/laravel-9-inertia-vue-3-crud-tutorial-example
 const submit = () => {
     form.post(route('services.store'))
 }
@@ -45,12 +41,9 @@ const submit = () => {
             <input v-model="form.categories" :value="category.id" type="checkbox" :id="'_'+category.id">
             <label :for="'_'+category.id">{{ category.name }}</label>
         </div>
-        {{ list_cat }}
-        <div>
-            <h1>create new category</h1>
-            <input v-model="create_category" type="text" />
-            {{ create_category }}
-        </div>
+
+        <CreateCategory/>
+
         <button type="submit">submit</button>
     </form>
     </main>

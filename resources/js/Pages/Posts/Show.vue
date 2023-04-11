@@ -3,20 +3,28 @@ import AppLayout from '../../Layouts/AppLayout.vue';
 import Service from '../../Components/Service.vue';
 import Demand from '../../Components/Demand.vue';
 
-import {Link} from '@inertiajs/vue3';
+import {Link, router} from '@inertiajs/vue3';
 
 const props = defineProps({
     post: Object
 })
 
+const delPost = () => {
+    router.delete(route('posts.destroy', props.post))
+}
+
 </script>
 <template>
     <div>
-    <Link :href="route('posts.index')">back</Link>
+        <Link :href="route('posts.index')">back</Link>
     </div>
 
     <div>
-    <Link :href="route('posts.edit', post)">edit</Link>
+        <Link :href="route('posts.edit', post)">edit</Link>
+    </div>
+
+    <div>
+        <a @click="delPost">delete</a>
     </div>
 
     <p>{{ post.user.username }}</p>
@@ -30,7 +38,7 @@ const props = defineProps({
     <Demand v-if="post.postable_type=='App\\Models\\Demand'" :postable="post.postable" />
 </template>
 <script>
-export default{
-    layout: AppLayout
-}
+    export default{
+        layout: AppLayout
+    }
 </script>
