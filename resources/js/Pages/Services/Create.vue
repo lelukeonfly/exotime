@@ -29,14 +29,19 @@ const submit = () => {
 
     <div>{{form.errors}}</div>
     <form @submit.prevent="submit">
+
         <input v-model="form.title" type="text" placeholder="Titel"/>
         <p v-if="form.errors.title">{{ form.errors.title }}</p>
+
         <textarea v-model="form.description" placeholder="description"></textarea>
         <p v-if="form.errors.description">{{ form.errors.description }}</p>
+
         <input v-model="form.name" type="text" placeholder="name"/>
         <p v-if="form.errors.name">{{ form.errors.name }}</p>
+
         <input v-model="form.duration_min" type="number" placeholder="duration"/>
         <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+
         <div v-for="category in categories" :key="category.id">
             <input v-model="form.categories" :value="category.id" type="checkbox" :id="'_'+category.id">
             <label :for="'_'+category.id">{{ category.name }}</label>

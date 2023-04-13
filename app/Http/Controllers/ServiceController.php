@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Service;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ServiceController extends Controller
@@ -56,17 +55,11 @@ class ServiceController extends Controller
 
         $service->save();
 
-        #$category = new Category([
-            #'name' => $categoryRequest->input('name'),
-        #]);
-#
-        #$category->save();
-
         $post = new Post([
             'title' => $postRequest->input('title'),
             'description' => $postRequest->input('description'),
             'user_id' => auth()->user()->id,
-    ]);
+        ]);
 
         $post->postable()->associate($service);
 
@@ -75,31 +68,34 @@ class ServiceController extends Controller
         $post->save();
 
         $post->categories()->attach($categories);
-}
+    }
 
-/**
- * Display the specified resource.
- *
- * @param  \App\Models\Service  $service
- * @return \Illuminate\Http\Response
- */
-public function show(Service $service)
-{
-    $service->load('post.categories');
+    /**
+    * Display the specified resource.
+    *
+    * @param  \App\Models\Service  $service
+    * @return \Illuminate\Http\Response
+    */
+    public function show(Service $service)
+    {
+        $service->load('post.categories');
 
-    return Inertia::render('Services/Show', compact('service'));
-}
+        return Inertia::render('Services/Show', compact('service'));
+    }
 
-/**
-* Show the form for editing the specified resource.
-*
-* @param  \App\Models\Service  $service
-* @return \Illuminate\Http\Response
-*/
-public function edit(Service $service)
-{
+    /**
+    * Show the form for editing the specified resource.
+    *
+    * @param  \App\Models\Service  $service
+    * @return \Illuminate\Http\Response
+    */
+    public function edit(Service $service)
+    {
 
-    //return Inertia::render(, compact());
+        /* $post->load(['postable', 'categories', 'user']); */
+        /* $categories = Category::all(); */
+        /*  */
+        /* return Inertia::render('Services/Edit', compact(['post', 'categories'])); */
     }
 
     /**

@@ -4,7 +4,7 @@ import Service from '../../Components/Service.vue';
 import Demand from '../../Components/Demand.vue';
 import CreateCategory from '../../Components/CreateCategory.vue';
 
-import {Link} from '@inertiajs/vue3';
+import {Link, useForm} from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -14,25 +14,81 @@ const props = defineProps({
 
 const usedCategories = props.post.categories.map(x => props.categories.findIndex(y => y.id === x.id));
 
+const defaultForm = {
+    title: props.post.title,
+    description: props.post.description,
+    categories: usedCategories
+}
+
+if (props.post.postable_type == "App\\Models\\Service") {
+    defaultForm.name = props.post.postable.name
+    defaultForm.duration_min = props.post.postable.duration_min
+}
+
+
+if (props.post.postable_type == "App\\Models\\Demand") {
+
+    //demand related props
+}
+
+const form = useForm(defaultForm)
+
 const isChecked = (index) => {
+// problem +1
     return usedCategories.includes(index);
+}
+
+const sendUpdate = () => {
+    console.log(form)
+    form.put(route('posts.update', props.post))
 }
 
 </script>
 <template>
     <Link :href="route('posts.index')">back</Link>
+
+
+
     <p>{{ post.user.username }}</p>
     <p>{{ post.created_at }}</p>
 
     <!--TODO: REPLACE WITH VMODEL-->
+    <form @submit.prevent="sendUpdate">
+        <input v-model="form.title" type="text">
 
-    <!-- postable specific -->
-    <div v-for="(category, index) in categories" :key="category.id">
-        <input :value="category.id" type="checkbox" :id="'_'+category.id" :checked="isChecked(index)">
-        <label :for="'_'+category.id">{{ category.name }}</label>
-    </div>
-    <CreateCategory/>
+        <textarea v-model="form.description" placeholder="description"></textarea>
 
+        <hr style="border: 5px solid black">
+        <!-- postable specific -->
+
+        <div v-if="props.post.postable_type == 'App\\Models\\Service'">
+            <input v-model="form.name" type="text" placeholder="name"/>
+            <p v-if="form.errors.name">{{ form.errors.name }}</p>
+
+            <input v-model="form.duration_min" type="number" placeholder="duration"/>
+            <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+        </div>
+
+        <div v-if="props.post.postable_type == 'App\\Models\\Demand'">
+            demand
+        </div>
+
+        <hr style="border: 5px solid black">
+
+        <div v-for="(category, index) in categories" :key="category.id">
+
+            <input v-model="form.categories" :value="category.id"
+            type="checkbox" :id="'_'+category.id" :checked="isChecked(index)">
+
+            <label :for="'_'+category.id">{{ category.name }}</label>
+
+        </div>
+        <CreateCategory/>
+
+        <button type="submit">submit</button>
+    </form>
+
+    {{ form }}
 </template>
 <script>
     export default{

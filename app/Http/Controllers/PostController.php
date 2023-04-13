@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdateDemandRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Category;
+use App\Models\Demand;
 use App\Models\Post;
+use App\Models\Service;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -77,9 +82,35 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(Request $request, $post)
     {
-        //
+
+
+        ddd(
+
+            [
+                $request,
+                $post
+            ]
+
+        );
+
+        /* $postable = $post->postable; */
+        /* $post->fill($postRequest); */
+        /* $post->save(); */
+        /*  */
+        /* if ($postable instanceof Service) { */
+        /*     $postable->fill($serviceRequest); */
+        /* } */
+        /* if ($postable instanceof Demand) { */
+        /*     $postable->fill($demandRequest); */
+        /* } */
+        /*  */
+        /* $postable->save(); */
+        /*  */
+        /* $post->categories()->sync($postRequest->input('categories')); */
+        /*  */
+        /* return redirect()->route('posts.index'); */
     }
 
     /**
