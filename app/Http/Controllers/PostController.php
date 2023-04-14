@@ -82,35 +82,30 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $post)
+    public function update(
+        UpdatePostRequest $postRequest,
+        UpdateServiceRequest $serviceRequest,
+        UpdateDemandRequest $demandRequest,
+        Post $post
+    )
     {
 
+        $postable = $post->postable;
+        $post->fill($postRequest->only(['title', 'description']));
+        $post->save();
 
-        ddd(
+        if ($postable instanceof Service) {
+            $postable->fill($serviceRequest->only(['name', 'duration_min']));
+        }
+        if ($postable instanceof Demand) {
+            $postable->fill($demandRequest);
+        }
 
-            [
-                $request,
-                $post
-            ]
+        $postable->save();
 
-        );
+        $post->categories()->sync($postRequest->input('categories'));
 
-        /* $postable = $post->postable; */
-        /* $post->fill($postRequest); */
-        /* $post->save(); */
-        /*  */
-        /* if ($postable instanceof Service) { */
-        /*     $postable->fill($serviceRequest); */
-        /* } */
-        /* if ($postable instanceof Demand) { */
-        /*     $postable->fill($demandRequest); */
-        /* } */
-        /*  */
-        /* $postable->save(); */
-        /*  */
-        /* $post->categories()->sync($postRequest->input('categories')); */
-        /*  */
-        /* return redirect()->route('posts.index'); */
+        return redirect()->route('posts.index');
     }
 
     /**

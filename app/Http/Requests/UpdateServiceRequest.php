@@ -24,8 +24,8 @@ class UpdateServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            /* 'name' => 'string', */
-            /* 'duration_min' => 'integer', */
+            'name' => 'string',
+            'duration_min' => 'integer',
         ];
     }
 }
