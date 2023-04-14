@@ -26,7 +26,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'permanently_banned',
     ];
 
     /**
@@ -57,10 +56,6 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
-        //'ban_count',
-        //'temporary_ban_count',
-        //'permanent_ban_count',
-        //'is_banned',
     ];
 
     public function posts()
@@ -86,6 +81,10 @@ class User extends Authenticatable
     public function isBanned()
     {
         $lastBans = $this->getLastBans();
+
+        if ($lastBans->count() === 0) {
+            return false;
+        }
 
         if ($this->isPermanentlyBanned($lastBans)) {
             return true;

@@ -17,25 +17,34 @@ class UserTest extends TestCase
      */
 
     /** @test */
-public function it_checks_if_user_has_a_permanent_ban()
-{
-    $user = User::factory()->create();
+    public function it_checks_if_user_gets_banned_without_bans()
+    {
+        $user = User::factory()->create();
 
-    $perm = new PermanentBan;
-    $perm->save();
+        $this->assertFalse($user->isBanned());
 
-    $ban = new Ban;
-    $ban->user_id = $user->id;
-    $ban->reason = 'testing permanent ban';
-    $ban->bannable()->associate($perm);
-    $user->bans()->save($ban);
+        $user->delete();
+}
 
-    // returns false idk why FIX
-    $this->assertTrue($user->isBanned());
+    /** @test */
+    public function it_checks_if_user_has_a_permanent_ban()
+    {
+        $user = User::factory()->create();
 
-    // clear bans for next test case
-    $user->bans()->delete();
-    $user->delete();
+        $perm = new PermanentBan;
+        $perm->save();
+
+        $ban = new Ban;
+        $ban->user_id = $user->id;
+        $ban->reason = 'testing permanent ban';
+        $ban->bannable()->associate($perm);
+        $user->bans()->save($ban);
+
+        $this->assertTrue($user->isBanned());
+
+        // clear bans for next test case
+        $user->bans()->delete();
+        $user->delete();
 }
 //Test case 2: user has a temporary ban that has not yet expired
 
