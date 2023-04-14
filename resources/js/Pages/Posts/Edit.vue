@@ -12,8 +12,6 @@ const props = defineProps({
     categories: Object
 })
 
-const usedCategories = props.post.categories.map(x => props.categories.findIndex(y => y.id === x.id));
-
 const defaultForm = {
     title: props.post.title,
     description: props.post.description,
@@ -33,10 +31,6 @@ if (props.post.postable_type == "App\\Models\\Demand") {
 
 const form = useForm(defaultForm)
 
-/*const isChecked = (index) => {
-    return usedCategories.includes(index);
-}*/
-
 const sendUpdate = () => {
     console.log(form)
     form.put(route('posts.update', props.post))
@@ -53,19 +47,32 @@ const sendUpdate = () => {
 
     <!--TODO: REPLACE WITH VMODEL-->
     <form @submit.prevent="sendUpdate">
-        <input v-model="form.title" type="text">
+        <div>
+            <label>Titel</label>
+            <input v-model="form.title" type="text">
+        </div>
 
-        <textarea v-model="form.description" placeholder="description"></textarea>
+        <div>
+            <label>description</label>
+            <textarea v-model="form.description" placeholder="description"></textarea>
+        </div>
 
         <hr style="border: 5px solid black">
+
         <!-- postable specific -->
 
         <div v-if="props.post.postable_type == 'App\\Models\\Service'">
-            <input v-model="form.name" type="text" placeholder="name"/>
-            <p v-if="form.errors.name">{{ form.errors.name }}</p>
+            <div>
+                <label>name</label>
+                <input v-model="form.name" type="text" placeholder="name"/>
+                <p v-if="form.errors.name">{{ form.errors.name }}</p>
+            </div>
 
-            <input v-model="form.duration_min" type="number" placeholder="duration"/>
-            <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+            <div>
+                <label>duration</label>
+                <input v-model="form.duration_min" type="number" placeholder="duration"/>
+                <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+            </div>
         </div>
 
         <div v-if="props.post.postable_type == 'App\\Models\\Demand'">
@@ -74,6 +81,7 @@ const sendUpdate = () => {
 
         <hr style="border: 5px solid black">
 
+        categories
         <div v-for="category in categories" :key="category.id">
             <input v-model="form.categories" :value="category.id" type="checkbox" />
             <label>{{ category.name }}</label>
