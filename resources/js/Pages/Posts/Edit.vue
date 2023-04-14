@@ -17,7 +17,7 @@ const usedCategories = props.post.categories.map(x => props.categories.findIndex
 const defaultForm = {
     title: props.post.title,
     description: props.post.description,
-    categories: usedCategories
+    categories: props.post.categories.map(x => x.id)
 }
 
 if (props.post.postable_type == "App\\Models\\Service") {
@@ -33,10 +33,9 @@ if (props.post.postable_type == "App\\Models\\Demand") {
 
 const form = useForm(defaultForm)
 
-const isChecked = (index) => {
-// problem +1
+/*const isChecked = (index) => {
     return usedCategories.includes(index);
-}
+}*/
 
 const sendUpdate = () => {
     console.log(form)
@@ -75,14 +74,13 @@ const sendUpdate = () => {
 
         <hr style="border: 5px solid black">
 
-        <div v-for="(category, index) in categories" :key="category.id">
-
-            <input v-model="form.categories" :value="category.id"
-            type="checkbox" :id="'_'+category.id" :checked="isChecked(index)">
-
-            <label :for="'_'+category.id">{{ category.name }}</label>
-
+        <div v-for="category in categories" :key="category.id">
+            <input v-model="form.categories" :value="category.id" type="checkbox" />
+            <label>{{ category.name }}</label>
         </div>
+
+        {{ form.categories }}
+
         <CreateCategory/>
 
         <button type="submit">submit</button>
