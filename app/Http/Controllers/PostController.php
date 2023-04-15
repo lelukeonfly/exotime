@@ -96,16 +96,19 @@ class PostController extends Controller
 
         if ($postable instanceof Service) {
             $postable->fill($serviceRequest->only(['name', 'duration_min']));
+            $return = 'services';
         }
         if ($postable instanceof Demand) {
-            $postable->fill($demandRequest);
+            $postable->fill($demandRequest->only(['location','duration_min','starting_at','ending_at']));
+            $return = 'demands';
         }
 
         $postable->save();
 
         $post->categories()->sync($postRequest->input('categories'));
 
-        return redirect()->route('posts.index');
+        return redirect()->route($return.'.index');
+
     }
 
     /**

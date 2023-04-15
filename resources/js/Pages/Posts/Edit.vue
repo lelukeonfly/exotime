@@ -25,14 +25,16 @@ if (props.post.postable_type == "App\\Models\\Service") {
 
 
 if (props.post.postable_type == "App\\Models\\Demand") {
-
-    //demand related props
+    defaultForm.location = props.post.postable.location;
+    defaultForm.duration_min = props.post.postable.duration_min;
+    defaultForm.starting_at = props.post.postable.starting_at;
+    defaultForm.ending_at = props.post.postable.ending_at;
 }
 
 const form = useForm(defaultForm)
 
 const sendUpdate = () => {
-    console.log(form)
+    //console.log(form)
     form.put(route('posts.update', props.post))
 }
 
@@ -76,7 +78,27 @@ const sendUpdate = () => {
         </div>
 
         <div v-if="props.post.postable_type == 'App\\Models\\Demand'">
-            demand
+            <div>
+                <label>location</label>
+                <input v-model="form.location" type="text" placeholder="location"/>
+                <p v-if="form.errors.location">{{ form.errors.location }}</p>
+            </div>
+
+            <div>
+                <label>duration</label>
+                <input v-model="form.duration_min" type="number" placeholder="duration"/>
+                <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+            </div>
+
+            <div>
+                <label>stargin at</label>
+                <input v-model="form.starting_at" type="date" placeholder="starting_at"/>
+            </div>
+            <div>
+                <label>ending at</label>
+                <input v-model="form.ending_at" type="date" placeholder="ending_at"/>
+            </div>
+
         </div>
 
         <hr style="border: 5px solid black">

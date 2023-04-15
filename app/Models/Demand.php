@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Demand extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  public function post()
-  {
-    return $this->morphOne(Post::class, 'postable');
+    protected $fillable = [
+        'location',
+        'duration_min',
+        'starting_at',
+        'ending_at',
+    ];
+
+    public function post()
+    {
+        return $this->morphOne(Post::class, 'postable');
   }
 }
