@@ -34,89 +34,90 @@ if (props.post.postable_type == "App\\Models\\Demand") {
 const form = useForm(defaultForm)
 
 const sendUpdate = () => {
-    //console.log(form)
     form.put(route('posts.update', props.post))
 }
 
 </script>
 <template>
-    <Link :href="route('posts.index')">back</Link>
+    <main class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-6 container max-w-7xl mx-auto">
+        <Link :href="route('posts.index')">back</Link>
 
 
 
-    <p>{{ post.user.username }}</p>
-    <p>{{ post.created_at }}</p>
+        <p>{{ post.user.username }}</p>
+        <p>{{ post.created_at }}</p>
 
-    <!--TODO: REPLACE WITH VMODEL-->
-    <form @submit.prevent="sendUpdate">
-        <div>
-            <label>Titel</label>
-            <input v-model="form.title" type="text">
-        </div>
-
-        <div>
-            <label>description</label>
-            <textarea v-model="form.description" placeholder="description"></textarea>
-        </div>
-
-        <hr style="border: 5px solid black">
-
-        <!-- postable specific -->
-
-        <div v-if="props.post.postable_type == 'App\\Models\\Service'">
+        <!--TODO: REPLACE WITH VMODEL-->
+        <form @submit.prevent="sendUpdate">
             <div>
-                <label>name</label>
-                <input v-model="form.name" type="text" placeholder="name"/>
-                <p v-if="form.errors.name">{{ form.errors.name }}</p>
+                <label>Titel</label>
+                <input v-model="form.title" type="text">
             </div>
 
             <div>
-                <label>duration</label>
-                <input v-model="form.duration_min" type="number" placeholder="duration"/>
-                <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
-            </div>
-        </div>
-
-        <div v-if="props.post.postable_type == 'App\\Models\\Demand'">
-            <div>
-                <label>location</label>
-                <input v-model="form.location" type="text" placeholder="location"/>
-                <p v-if="form.errors.location">{{ form.errors.location }}</p>
+                <label>description</label>
+                <textarea v-model="form.description" placeholder="description"></textarea>
             </div>
 
-            <div>
-                <label>duration</label>
-                <input v-model="form.duration_min" type="number" placeholder="duration"/>
-                <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+            <hr style="border: 5px solid black">
+
+            <!-- postable specific -->
+
+            <div v-if="props.post.postable_type == 'App\\Models\\Service'">
+                <div>
+                    <label>name</label>
+                    <input v-model="form.name" type="text" placeholder="name"/>
+                    <p v-if="form.errors.name">{{ form.errors.name }}</p>
+                </div>
+
+                <div>
+                    <label>duration</label>
+                    <input v-model="form.duration_min" type="number" placeholder="duration"/>
+                    <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+                </div>
             </div>
 
-            <div>
-                <label>stargin at</label>
-                <input v-model="form.starting_at" type="date" placeholder="starting_at"/>
+            <div v-if="props.post.postable_type == 'App\\Models\\Demand'">
+                <div>
+                    <label>location</label>
+                    <input v-model="form.location" type="text" placeholder="location"/>
+                    <p v-if="form.errors.location">{{ form.errors.location }}</p>
+                </div>
+
+                <div>
+                    <label>duration</label>
+                    <input v-model="form.duration_min" type="number" placeholder="duration"/>
+                    <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+                </div>
+
+                <div>
+                    <label>stargin at</label>
+                    <input v-model="form.starting_at" type="datetime-local" placeholder="starting_at" />
+                </div>
+                <div>
+                    <label>ending at</label>
+                    <input v-model="form.ending_at" type="datetime-local" placeholder="ending_at" />
+                </div>
+
             </div>
-            <div>
-                <label>ending at</label>
-                <input v-model="form.ending_at" type="date" placeholder="ending_at"/>
+
+            <hr style="border: 5px solid black">
+
+            categories
+            <div v-for="category in categories" :key="category.id">
+                <input v-model="form.categories" :value="category.id" type="checkbox" />
+                <label>{{ category.name }}</label>
             </div>
 
-        </div>
+            {{ form.categories }}
 
-        <hr style="border: 5px solid black">
+            <CreateCategory/>
 
-        categories
-        <div v-for="category in categories" :key="category.id">
-            <input v-model="form.categories" :value="category.id" type="checkbox" />
-            <label>{{ category.name }}</label>
-        </div>
+            <button type="submit">submit</button>
+        </form>
 
-        {{ form.categories }}
-
-        <CreateCategory/>
-
-        <button type="submit">submit</button>
-    </form>
-
-    {{ form }}
+        {{ form }}
+    </main>
 </template>
 <script>
     export default{

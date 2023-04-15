@@ -18,6 +18,9 @@ posts:
 - [] update parent time from service and demand (check docs: https://laravel.com/docs/9.x/eloquent-relationships#touching-parent-timestamps) and maybe remove child timestamps
 - optional location
 - filter nearby
+- remember
+- activ oder inactiv
+- delete ineherits with post
 
 services
 -inherits from post
@@ -31,6 +34,10 @@ contract:
 dashboard:
 - show demands and services nearby
 - recommend services and demands
+
+user:
+- living place (only city/town)
+- contact info
 
 admin:
 - [] manage:

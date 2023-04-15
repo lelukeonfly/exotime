@@ -1,5 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import UserLink from '../Components/UserLink.vue';
 
 const props = defineProps({
     post: Object
@@ -10,13 +11,8 @@ const props = defineProps({
         <Link :href="route('posts.show', post.id)" class="flex flex-col gap-3 flex-wrap bg-white rounded-lg p-3 cursor-pointer shadow h-full">
             <!-- PROFILE -->
         <div class="flex flex-wrap justify-between" @click.stop>
-            <Link :href="route('dashboard')">
-            <div class="flex items-center gap-1 w-fit hover:bg-gray-200 rounded-full p-1 transition-all">
-                <img :src="post.user.profile_photo_url" class="rounded-full h-6"/>
-                <div class="text-blue-600">@{{ post.user.username }}</div>
-            </div>
-            </Link>
-            <div>
+            <UserLink :user="post.user"/>
+            <div class="my-auto">
                 {{ new Date(post.created_at).toLocaleDateString() }}
             </div>
         </div>

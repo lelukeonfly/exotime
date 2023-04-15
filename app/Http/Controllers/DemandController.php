@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StoreDemandRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdateDemandRequest;
+use App\Models\Category;
 use App\Models\Demand;
 use App\Models\Post;
 use Inertia\Inertia;
@@ -30,7 +32,9 @@ class DemandController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return Inertia::render('Demands/Create', compact('categories'));
     }
 
     /**
@@ -39,11 +43,32 @@ class DemandController extends Controller
      * @param  \App\Http\Requests\StoreDemandRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDemandRequest $demandRequest, StorePostRequest $postRequest)
+    /* public function store(StoreDemandRequest $demandRequest, StorePostRequest $postRequest) */
+    /* { */
+    /*     $demand = new Demand([ */
+    /*         'name' => $demandRequest->input('name'), */
+    /*         'duration_min' => $demandRequest->input('duration_min'), */
+    /* ]); */
+    /*  */
+    /*     $demand->save(); */
+    /*  */
+    /*     $post = new Post([ */
+    /*         'title' => $postRequest->input('title'), */
+    /*         'description' => $postRequest->input('description'), */
+    /*         'user_id' => auth()->user()->id, */
+    /* ]); */
+    /*  */
+    /*     $post->postable()->associate($demand); */
+    /*  */
+    /*     $post->save(); */
+    /* } */
+    public function store(StoreDemandRequest $demandRequest, StorePostRequest $postRequest, StoreCategoryRequest $categoryRequest)
     {
         $demand = new Demand([
-            'name' => $demandRequest->input('name'),
+            'location' => $demandRequest->input('location'),
             'duration_min' => $demandRequest->input('duration_min'),
+            'starting_at' => $demandRequest->input('starting_at'),
+            'ending_at' => $demandRequest->input('ending_at'),
     ]);
 
         $demand->save();
@@ -52,11 +77,15 @@ class DemandController extends Controller
             'title' => $postRequest->input('title'),
             'description' => $postRequest->input('description'),
             'user_id' => auth()->user()->id,
-    ]);
+        ]);
 
         $post->postable()->associate($demand);
 
+        $categories = $categoryRequest->input('categories');
+
         $post->save();
+
+        $post->categories()->attach($categories);
     }
 
     /**
