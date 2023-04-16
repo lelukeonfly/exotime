@@ -13,6 +13,9 @@ class Post extends Model
         'user_id',
         'title',
         'description',
+        'duration_min',
+        'preferred_location',
+        'status',
         'postable_id',
         'postable_type',
     ];

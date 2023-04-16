@@ -11,8 +11,9 @@ const props = defineProps({
 const form = useForm({
     title: '',
     description: '',
-    name: '',
-    duration_min: '',
+    duration_min: null,
+    preferred_location: '',
+    status: '',
     categories: []
 })
 
@@ -36,11 +37,14 @@ const submit = () => {
         <textarea v-model="form.description" placeholder="description"></textarea>
         <p v-if="form.errors.description">{{ form.errors.description }}</p>
 
-        <input v-model="form.name" type="text" placeholder="name"/>
-        <p v-if="form.errors.name">{{ form.errors.name }}</p>
-
         <input v-model="form.duration_min" type="number" placeholder="duration"/>
         <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+
+        <input v-model="form.status" type="text" placeholder="status"/>
+        <p v-if="form.errors.status">{{ form.errors.status }}</p>
+
+        <input v-model="form.preferred_location" type="text" placeholder="preferred_location"/>
+        <p v-if="form.errors.preferred_location">{{ form.errors.preferred_location }}</p>
 
         <div v-for="category in categories" :key="category.id">
             <input v-model="form.categories" :value="category.id" type="checkbox" :id="'_'+category.id">

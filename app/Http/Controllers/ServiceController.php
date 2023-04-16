@@ -49,9 +49,7 @@ class ServiceController extends Controller
     public function store(StoreServiceRequest $serviceRequest, StorePostRequest $postRequest, StoreCategoryRequest $categoryRequest)
     {
         $service = new Service([
-            /* 'name' => $serviceRequest->input('name'), */
-            /* 'duration_min' => $serviceRequest->input('duration_min'), */
-    ]);
+        ]);
 
         $service->save();
 
@@ -59,6 +57,9 @@ class ServiceController extends Controller
             'title' => $postRequest->input('title'),
             'description' => $postRequest->input('description'),
             'user_id' => auth()->user()->id,
+            'duration_min' => $postRequest->input('duration_min'),
+            'preferred_location' => $postRequest->input('preferred_location'),
+            'status' => $postRequest->input('status'),
         ]);
 
         $post->postable()->associate($service);
@@ -68,6 +69,8 @@ class ServiceController extends Controller
         $post->save();
 
         $post->categories()->attach($categories);
+
+        return redirect()->route('services.index');
     }
 
     /**
