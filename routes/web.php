@@ -8,10 +8,7 @@ use App\Http\Controllers\ServiceController;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Application;
-<<<<<<< HEAD
-=======
 use Illuminate\Support\Facades\DB;
->>>>>>> feature/crud_post_service_demand
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
