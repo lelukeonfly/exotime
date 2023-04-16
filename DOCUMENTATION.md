@@ -14,3 +14,5 @@ php artisan make:migration create_category_post_table
 php artisan make:model TemporaryBan --all
 php artisan make:model PermanentBan --all
 php artisan make:model UnBan --all
+php artisan make:middleware CheckBan
+php artisan make:middleware BanPermanent

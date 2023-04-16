@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return Inertia::render('Categories/Index', compact('categories'));
     }
 
     /**
@@ -34,9 +37,18 @@ class CategoryController extends Controller
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
+    /* public function store(StoreCategoryRequest $request) */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        /* $category = $request->validated(); */
+
+        Category::create([
+            /* 'name' => $category['name'], */
+            /* 'description' => $category['description'], */
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ]);
+
     }
 
     /**
@@ -47,7 +59,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $category->load(['parents', 'children', 'posts.postable.post']);
+
+        return Inertia::render('Categories/Show', compact('category'));
     }
 
     /**

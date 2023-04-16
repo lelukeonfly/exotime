@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         Category::factory(10)->create();
 
-        //User::factory(10)->withPosts()->create();
+        User::factory(['email' => 'lukas@moessler.com'])->withPosts()->create();
         User::factory(10)->withPosts()->withBans()->create();
 
         Post::get()->map(
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         // where you shuffle the Users and pick the id of the first one
         // but it can't be the User itself that gives himself Feedback
         // Also set the relation properties for each collection
-    //
+        //
         User::get()->map(
             fn ($user) => collect(range(1, 3))->map(
                 fn () => Feedback::factory()->create([
@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
         // for every collection create a Feedback with it's factory
         // where you shuffle the Users and pick the id of the first one
         // Also set the relation properties for each collection
-    //
+        //
         Post::get()->map(
             fn ($post) => collect(range(1, 3))->map(
                 fn () => Feedback::factory()->create([

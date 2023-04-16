@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdateDemandRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\UpdateServiceRequest;
+use App\Models\Category;
+use App\Models\Demand;
 use App\Models\Post;
+use App\Models\Service;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -15,7 +22,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with(['postable', 'user', 'categories'])->get();
+
+        return Inertia::render('Posts/Index', compact('posts'));
     }
 
     /**
@@ -36,7 +45,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        // leave empty
     }
 
     /**
@@ -47,7 +56,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $post->load(['postable', 'categories', 'user']);
+
+        return Inertia::render('Posts/Show', compact('post'));
     }
 
     /**
@@ -58,7 +69,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $post->load(['postable', 'categories', 'user']);
+        $categories = Category::all();
+
+        return Inertia::render('Posts/Edit', compact(['post', 'categories']));
     }
 
     /**
@@ -68,9 +82,33 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(
+        UpdatePostRequest $postRequest,
+        UpdateServiceRequest $serviceRequest,
+        UpdateDemandRequest $demandRequest,
+        Post $post
+    )
     {
-        //
+
+        $postable = $post->postable;
+        $post->fill($postRequest->only(['title', 'description']));
+        $post->save();
+
+        if ($postable instanceof Service) {
+            $postable->fill($serviceRequest->only(['name', 'duration_min']));
+            $return = 'services';
+        }
+        if ($postable instanceof Demand) {
+            $postable->fill($demandRequest->only(['location','duration_min','starting_at','ending_at']));
+            $return = 'demands';
+        }
+
+        $postable->save();
+
+        $post->categories()->sync($postRequest->input('categories'));
+
+        return redirect()->route($return.'.index');
+
     }
 
     /**
@@ -81,6 +119,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

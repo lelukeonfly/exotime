@@ -17,7 +17,8 @@ class ServiceFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name(),
+            'duration_min' => fake()->numberBetween(30,180),
         ];
     }
 }

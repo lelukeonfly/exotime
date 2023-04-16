@@ -1,8 +1,19 @@
 <?php
 
 use App\Http\Controllers\BanController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DemandController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ServiceController;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Application;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Facades\DB;
+>>>>>>> feature/crud_post_service_demand
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 /*
@@ -16,12 +27,18 @@ use Inertia\Inertia;
 |
  */
 
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        #
+        'categorie_count' => Category::count(),
+        'user_count' => User::count(),
+        'user_online' => DB::table('sessions') ->whereNotNull('user_id') ->distinct() ->count('user_id'),
     ]);
 });
 
@@ -35,5 +52,13 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    Route::resource('posts', PostController::class);
+    Route::resource('services', ServiceController::class);
+    Route::resource('demands', DemandController::class);
+    Route::resource('categories', CategoryController::class);
     Route::get('banned', BanController::class);
 });
