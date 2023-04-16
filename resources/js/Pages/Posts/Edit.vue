@@ -3,6 +3,7 @@ import AppLayout from '../../Layouts/AppLayout.vue';
 import Service from '../../Components/Service.vue';
 import Demand from '../../Components/Demand.vue';
 import CreateCategory from '../../Components/CreateCategory.vue';
+import DirectButton from '../../Components/DirectButton.vue';
 
 import {Link, useForm} from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -39,8 +40,8 @@ const sendUpdate = () => {
 
 </script>
 <template>
-    <main class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-6 container max-w-7xl mx-auto">
-        <Link :href="route('posts.index')">back</Link>
+    <main class="p-6 container max-w-7xl mx-auto">
+        <DirectButton routeURL="posts.index" content="back" class="inline-block"/>
 
 
 
@@ -58,8 +59,6 @@ const sendUpdate = () => {
                 <label>description</label>
                 <textarea v-model="form.description" placeholder="description"></textarea>
             </div>
-
-            <hr style="border: 5px solid black">
 
             <!-- postable specific -->
 
@@ -101,12 +100,12 @@ const sendUpdate = () => {
 
             </div>
 
-            <hr style="border: 5px solid black">
-
-            categories
-            <div v-for="category in categories" :key="category.id">
-                <input v-model="form.categories" :value="category.id" type="checkbox" />
-                <label>{{ category.name }}</label>
+            <div class="flex flex-wrap gap-1">
+                <label v-for="category in categories" :key="category.id"
+                class="text-xs bg-gray-200 rounded-full hover cursor-pointer">
+                    <input v-model="form.categories" :value="category.id" type="checkbox" class="hidden peer" />
+                    <div class="p-2 rounded-full peer-checked:bg-lime-300">{{ category.name }}</div>
+                </label>
             </div>
 
             {{ form.categories }}
@@ -119,6 +118,8 @@ const sendUpdate = () => {
         {{ form }}
     </main>
 </template>
+<style scoped>
+</style>
 <script>
     export default{
         layout: AppLayout

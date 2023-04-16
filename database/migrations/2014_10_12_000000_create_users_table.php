@@ -18,12 +18,13 @@ return new class extends Migration
       #$table->string('lastname');
       $table->string('username')->nullable();
       $table->string('email')->unique();
+      #wohnort
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password');
       $table->rememberToken();
       $table->foreignId('current_team_id')->nullable();
       $table->string('profile_photo_path', 2048)->nullable();
-      $table->string('lang')->default('en');
+      #$table->string('lang')->default('en');
       #$table->boolean('permanently_banned')->default(false);
       $table->timestamps();
     });
