@@ -4,7 +4,4 @@
     })
 </script>
 <template>
-    <div>
-        {{postable}}
-    </div>
 </template>

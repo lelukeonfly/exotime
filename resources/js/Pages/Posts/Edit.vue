@@ -16,10 +16,13 @@ const props = defineProps({
 const defaultForm = {
     title: props.post.title,
     description: props.post.description,
-    categories: props.post.categories.map(x => x.id)
+    categories: props.post.categories.map(x => x.id),
+    duration_min: props.post.duration_min,
+    preferred_location: props.post.preferred_location,
+    status: props.post.status
 }
 
-if (props.post.postable_type == "App\\Models\\Service") {
+/*if (props.post.postable_type == "App\\Models\\Service") {
     defaultForm.name = props.post.postable.name
     defaultForm.duration_min = props.post.postable.duration_min
 }
@@ -30,7 +33,7 @@ if (props.post.postable_type == "App\\Models\\Demand") {
     defaultForm.duration_min = props.post.postable.duration_min;
     defaultForm.starting_at = props.post.postable.starting_at;
     defaultForm.ending_at = props.post.postable.ending_at;
-}
+}*/
 
 const form = useForm(defaultForm)
 
@@ -41,7 +44,8 @@ const sendUpdate = () => {
 </script>
 <template>
     <main class="p-6 container max-w-7xl mx-auto">
-        <DirectButton routeURL="posts.index" content="back" class="inline-block"/>
+
+        <DirectButton routeURL="posts.index" color="red-500" content="back" class="inline-block"/>
 
 
 
@@ -59,50 +63,35 @@ const sendUpdate = () => {
                 <label>description</label>
                 <textarea v-model="form.description" placeholder="description"></textarea>
             </div>
+            <div>
+                <label>preferred location</label>
+                <input v-model="form.preferred_location" type="text" placeholder="location"/>
+                <p v-if="form.errors.preferred_location">{{ form.errors.preferred_location}}</p>
+            </div>
+
+            <div>
+                <label>duration</label>
+                <input v-model="form.duration_min" type="text" placeholder="duration"/>
+                <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+            </div>
+
+            <div>
+                <label>status</label>
+                <input v-model="form.status" type="text" placeholder="status"/>
+                <p v-if="form.errors.status">{{ form.errors.status }}</p>
+            </div>
 
             <!-- postable specific -->
 
             <div v-if="props.post.postable_type == 'App\\Models\\Service'">
-                <div>
-                    <label>name</label>
-                    <input v-model="form.name" type="text" placeholder="name"/>
-                    <p v-if="form.errors.name">{{ form.errors.name }}</p>
-                </div>
-
-                <div>
-                    <label>duration</label>
-                    <input v-model="form.duration_min" type="number" placeholder="duration"/>
-                    <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
-                </div>
             </div>
 
             <div v-if="props.post.postable_type == 'App\\Models\\Demand'">
-                <div>
-                    <label>location</label>
-                    <input v-model="form.location" type="text" placeholder="location"/>
-                    <p v-if="form.errors.location">{{ form.errors.location }}</p>
-                </div>
-
-                <div>
-                    <label>duration</label>
-                    <input v-model="form.duration_min" type="number" placeholder="duration"/>
-                    <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
-                </div>
-
-                <div>
-                    <label>stargin at</label>
-                    <input v-model="form.starting_at" type="datetime-local" placeholder="starting_at" />
-                </div>
-                <div>
-                    <label>ending at</label>
-                    <input v-model="form.ending_at" type="datetime-local" placeholder="ending_at" />
-                </div>
-
             </div>
 
             <div class="flex flex-wrap gap-1">
                 <label v-for="category in categories" :key="category.id"
-                class="text-xs bg-gray-200 rounded-full hover cursor-pointer">
+                    class="text-xs bg-gray-200 rounded-full hover cursor-pointer">
                     <input v-model="form.categories" :value="category.id" type="checkbox" class="hidden peer" />
                     <div class="p-2 rounded-full peer-checked:bg-lime-300">{{ category.name }}</div>
                 </label>

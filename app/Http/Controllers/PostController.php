@@ -56,7 +56,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load(['postable', 'categories', 'user']);
+        $post->load(['postable', 'categories', 'supplies', 'user', 'feedbacks.user']);
 
         return Inertia::render('Posts/Show', compact('post'));
     }
@@ -84,26 +84,32 @@ class PostController extends Controller
      */
     public function update(
         UpdatePostRequest $postRequest,
-        UpdateServiceRequest $serviceRequest,
+        /* UpdateServiceRequest $serviceRequest, */
         UpdateDemandRequest $demandRequest,
         Post $post
     )
     {
 
         $postable = $post->postable;
-        $post->fill($postRequest->only(['title', 'description']));
+        $post->fill($postRequest->only([
+            'title',
+            'description',
+            'duration_min',
+            'preferred_location',
+            'status',
+        ]));
         $post->save();
 
         if ($postable instanceof Service) {
-            $postable->fill($serviceRequest->only(['name', 'duration_min']));
+        /*     $postable->fill($serviceRequest->only(['name', 'duration_min'])); */
             $return = 'services';
         }
         if ($postable instanceof Demand) {
-            $postable->fill($demandRequest->only(['location','duration_min','starting_at','ending_at']));
+        /*     $postable->fill($demandRequest->only(['location','duration_min','starting_at','ending_at'])); */
             $return = 'demands';
         }
 
-        $postable->save();
+        /* $postable->save(); */
 
         $post->categories()->sync($postRequest->input('categories'));
 

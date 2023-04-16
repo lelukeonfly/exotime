@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Demand;
 use App\Models\Feedback;
 use App\Models\Service;
+use App\Models\Supply;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,9 +27,20 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'description' => $this->faker->paragraph(),
+            'duration_min' => $this->faker->numberBetween(15,120),
+            'preferred_location' => $this->faker->word(),
+            'status' => $this->faker->word(),
             'postable_id' => $postable->id,
             'postable_type' => get_class($postable),
         ];
+    }
+
+    public function withSupplies($count = 3)
+    {
+        return $this->has(
+            Supply::factory()->count($count),
+            'supplies'
+        );
     }
 
     public function withCategories($count = 3)

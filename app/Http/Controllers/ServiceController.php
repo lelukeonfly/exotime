@@ -49,8 +49,8 @@ class ServiceController extends Controller
     public function store(StoreServiceRequest $serviceRequest, StorePostRequest $postRequest, StoreCategoryRequest $categoryRequest)
     {
         $service = new Service([
-            'name' => $serviceRequest->input('name'),
-            'duration_min' => $serviceRequest->input('duration_min'),
+            /* 'name' => $serviceRequest->input('name'), */
+            /* 'duration_min' => $serviceRequest->input('duration_min'), */
     ]);
 
         $service->save();
@@ -107,7 +107,7 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        dd('update');
+        //dd('update');
     }
 
     /**

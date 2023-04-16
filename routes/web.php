@@ -3,6 +3,7 @@
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DemandController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Category;
@@ -57,5 +58,6 @@ Route::middleware([
     Route::resource('services', ServiceController::class);
     Route::resource('demands', DemandController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('feedbacks', FeedbackController::class);
     Route::get('banned', BanController::class);
 });

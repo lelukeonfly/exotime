@@ -9,6 +9,14 @@ class Feedback extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'rating',
+        'feedback',
+        'feedbackable_type',
+        'feedbackable_id',
+    ];
+
     public function feedbackable()
     {
         return $this->morphTo();

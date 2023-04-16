@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('demands', function (Blueprint $table) {
+        Schema::create('post_supply', function (Blueprint $table) {
             $table->id();
-            /* # for now only start and endtime -> later add multiple weekdays with each having start / stop time ... */
-            /* $table->string('location'); */
-            /* $table->integer('duration_min'); */
-            /* $table->timestamp('starting_at')->nullable(); */
-            /* $table->timestamp('ending_at')->nullable(); */
+            $table->foreignId('post_id');
+            $table->foreignId('supply_id');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('demands');
+        Schema::dropIfExists('post_supply');
     }
 };

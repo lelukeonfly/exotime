@@ -17,6 +17,10 @@ class Post extends Model
         'postable_type',
     ];
 
+    public function supplies() {
+        return $this->belongsToMany(Supply::class);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class);

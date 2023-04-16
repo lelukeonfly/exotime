@@ -17,10 +17,10 @@ class DemandFactory extends Factory
     public function definition()
     {
         return [
-            'location' => fake()->name(),
-            'duration_min' => fake()->numberBetween(30,180),
-            'starting_at' => fake()->date(),
-            'ending_at' => fake()->date(),
+            /* 'location' => fake()->name(), */
+            /* 'duration_min' => fake()->numberBetween(30,180), */
+            /* 'starting_at' => fake()->date(), */
+            /* 'ending_at' => fake()->date(), */
         ];
     }
 }

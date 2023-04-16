@@ -36,7 +36,13 @@ class FeedbackController extends Controller
      */
     public function store(StoreFeedbackRequest $request)
     {
-        //
+        Feedback::create([
+            'user_id' => auth()->user()->id,
+            'rating' => $request->input('rating'),
+            'feedback' => $request->input('feedback'),
+            'feedbackable_type' => $request->input('feedbackable_type'),
+            'feedbackable_id' => $request->input('feedbackable_id'),
+        ]);
     }
 
     /**

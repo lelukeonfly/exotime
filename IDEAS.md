@@ -40,6 +40,9 @@ user:
 - living place (only city/town)
 - contact info
 
+supplies:
+remove nullable
+
 admin:
 - [] manage:
 - users
