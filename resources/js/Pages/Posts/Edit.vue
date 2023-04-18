@@ -5,6 +5,7 @@ import Demand from '../../Components/Demand.vue';
 import CreateCategory from '../../Components/CreateCategory.vue';
 import DirectButton from '../../Components/DirectButton.vue';
 import Option from '../../Components/Option.vue';
+import CreateSupply from '../../Components/CreateSupply.vue';
 
 import {Link, useForm} from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -112,6 +113,7 @@ const sendUpdate = () => {
             {{ form.categories }}
 
             <CreateCategory/>
+            <CreateSupply/>
 
             <button type="submit">submit</button>
         </form>

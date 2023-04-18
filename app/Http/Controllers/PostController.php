@@ -114,6 +114,7 @@ class PostController extends Controller
         /* $postable->save(); */
 
         $post->categories()->sync($postRequest->input('categories'));
+        $post->supplies()->sync($postRequest->input('supplies'));
 
         return redirect()->route($return.'.index');
 
