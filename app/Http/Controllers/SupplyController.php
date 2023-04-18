@@ -36,7 +36,9 @@ class SupplyController extends Controller
      */
     public function store(StoreSupplyRequest $request)
     {
-        //
+        Supply::create([
+            'name' => $request->input('name')
+        ]);
     }
 
     /**

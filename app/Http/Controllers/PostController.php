@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Demand;
 use App\Models\Post;
 use App\Models\Service;
+use App\Models\Supply;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -69,10 +70,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $post->load(['postable', 'categories', 'user']);
+        $post->load(['postable', 'categories', 'supplies', 'user']);
         $categories = Category::all();
+        $supplies = Supply::all();
 
-        return Inertia::render('Posts/Edit', compact(['post', 'categories']));
+        return Inertia::render('Posts/Edit', compact(['post', 'categories', 'supplies']));
     }
 
     /**

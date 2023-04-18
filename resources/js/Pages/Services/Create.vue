@@ -3,9 +3,12 @@ import AppLayout from '../../Layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import CreateCategory from '../../Components/CreateCategory.vue';
+import CreateSupply from '../../Components/CreateSupply.vue';
+import Option from '../../Components/Option.vue';
 
 const props = defineProps({
-    categories: Object
+    categories: Object,
+    supplies: Object
 })
 
 const form = useForm({
@@ -14,6 +17,7 @@ const form = useForm({
     duration_min: null,
     preferred_location: '',
     status: '',
+    supplies: [],
     categories: []
 })
 
@@ -46,12 +50,27 @@ const submit = () => {
         <input v-model="form.preferred_location" type="text" placeholder="preferred_location"/>
         <p v-if="form.errors.preferred_location">{{ form.errors.preferred_location }}</p>
 
+        category
+        <!--div class="flex flex-wrap gap-1">
+            <Option v-for="category in categories" :key="category.id"
+            v-model="form.categories" :option="category"/>
+        </div-->
         <div v-for="category in categories" :key="category.id">
             <input v-model="form.categories" :value="category.id" type="checkbox" :id="'_'+category.id">
             <label :for="'_'+category.id">{{ category.name }}</label>
         </div>
+        supplies
+        <!--div class="flex flex-wrap gap-1">
+            <Option v-for="supply in supplies" :key="supply.id"
+            v-model="form.supplies" :option="supply"/>
+        </div-->
+        <div v-for="supply in supplies" :key="supply.id">
+            <input v-model="form.supplies" :value="supply.id" type="checkbox" :id="'_'+supply.id">
+            <label :for="'_'+supply.id">{{ supply.name }}</label>
+        </div>
 
         <CreateCategory/>
+        <CreateSupply/>
 
         <button type="submit">submit</button>
     </form>

@@ -6,8 +6,10 @@ use App\Http\Controllers\DemandController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SupplyController;
 use App\Models\Category;
 use App\Models\User;
+use Database\Seeders\SupplySeeder;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +60,7 @@ Route::middleware([
     Route::resource('services', ServiceController::class);
     Route::resource('demands', DemandController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('supplies', SupplyController::class);
     Route::resource('feedbacks', FeedbackController::class);
     Route::get('banned', BanController::class);
 });

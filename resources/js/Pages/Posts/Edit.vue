@@ -4,19 +4,22 @@ import Service from '../../Components/Service.vue';
 import Demand from '../../Components/Demand.vue';
 import CreateCategory from '../../Components/CreateCategory.vue';
 import DirectButton from '../../Components/DirectButton.vue';
+import Option from '../../Components/Option.vue';
 
 import {Link, useForm} from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
     post: Object,
-    categories: Object
+    categories: Object,
+    supplies: Object
 })
 
 const defaultForm = {
     title: props.post.title,
     description: props.post.description,
     categories: props.post.categories.map(x => x.id),
+    supplies: props.post.supplies.map(x => x.id),
     duration_min: props.post.duration_min,
     preferred_location: props.post.preferred_location,
     status: props.post.status
@@ -89,11 +92,20 @@ const sendUpdate = () => {
             <div v-if="props.post.postable_type == 'App\\Models\\Demand'">
             </div>
 
+            category
             <div class="flex flex-wrap gap-1">
                 <label v-for="category in categories" :key="category.id"
                     class="text-xs bg-gray-200 rounded-full hover cursor-pointer">
                     <input v-model="form.categories" :value="category.id" type="checkbox" class="hidden peer" />
                     <div class="p-2 rounded-full peer-checked:bg-lime-300">{{ category.name }}</div>
+                </label>
+            </div>
+            supplies
+            <div class="flex flex-wrap gap-1">
+                <label v-for="supply in supplies" :key="supply.id"
+                    class="text-xs bg-gray-200 rounded-full hover cursor-pointer">
+                    <input v-model="form.supplies" :value="supply.id" type="checkbox" class="hidden peer" />
+                    <div class="p-2 rounded-full peer-checked:bg-lime-300">{{ supply.name }}</div>
                 </label>
             </div>
 

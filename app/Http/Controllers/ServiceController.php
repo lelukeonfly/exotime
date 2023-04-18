@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\StoreSupplyRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Service;
+use App\Models\Supply;
 use Inertia\Inertia;
 
 class ServiceController extends Controller
@@ -36,8 +38,9 @@ class ServiceController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $supplies = Supply::all();
 
-        return Inertia::render('Services/Create', compact('categories'));
+        return Inertia::render('Services/Create', compact(['categories','supplies']));
     }
 
     /**
@@ -46,8 +49,14 @@ class ServiceController extends Controller
      * @param  \App\Http\Requests\StoreServiceRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreServiceRequest $serviceRequest, StorePostRequest $postRequest, StoreCategoryRequest $categoryRequest)
+    public function store(
+        StoreServiceRequest $serviceRequest,
+        StorePostRequest $postRequest,
+        StoreCategoryRequest $categoryRequest,
+        StoreSupplyRequest $supplyRequest
+    )
     {
+
         $service = new Service([
         ]);
 
@@ -66,9 +75,13 @@ class ServiceController extends Controller
 
         $categories = $categoryRequest->input('categories');
 
+        $supplies = $supplyRequest->input('supplies');
+
         $post->save();
 
         $post->categories()->attach($categories);
+
+        $post->supplies()->attach($supplies);
 
         return redirect()->route('services.index');
     }
