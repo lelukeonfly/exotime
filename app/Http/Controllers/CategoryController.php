@@ -59,7 +59,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $category->load(['parents', 'children', 'posts.postable.post']);
+        $category->load(['parents', 'children', 'posts.postable', 'posts.user', 'posts.categories']);
 
         return Inertia::render('Categories/Show', compact('category'));
     }
