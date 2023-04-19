@@ -5,6 +5,8 @@ import Demand from '../../Components/Demand.vue';
 import CreateCategory from '../../Components/CreateCategory.vue';
 import DirectButton from '../../Components/DirectButton.vue';
 import Option from '../../Components/Option.vue';
+import InputField from '../../Components/InputField.vue';
+import InputTextBox from '../../Components/InputTextBox.vue';
 import CreateSupply from '../../Components/CreateSupply.vue';
 
 import {Link, useForm} from '@inertiajs/vue3';
@@ -26,19 +28,6 @@ const defaultForm = {
     status: props.post.status
 }
 
-/*if (props.post.postable_type == "App\\Models\\Service") {
-    defaultForm.name = props.post.postable.name
-    defaultForm.duration_min = props.post.postable.duration_min
-}
-
-
-if (props.post.postable_type == "App\\Models\\Demand") {
-    defaultForm.location = props.post.postable.location;
-    defaultForm.duration_min = props.post.postable.duration_min;
-    defaultForm.starting_at = props.post.postable.starting_at;
-    defaultForm.ending_at = props.post.postable.ending_at;
-}*/
-
 const form = useForm(defaultForm)
 
 const sendUpdate = () => {
@@ -58,32 +47,17 @@ const sendUpdate = () => {
 
         <!--TODO: REPLACE WITH VMODEL-->
         <form @submit.prevent="sendUpdate">
-            <div>
-                <label>Titel</label>
-                <input v-model="form.title" type="text">
-            </div>
 
-            <div>
-                <label>description</label>
-                <textarea v-model="form.description" placeholder="description"></textarea>
-            </div>
-            <div>
-                <label>preferred location</label>
-                <input v-model="form.preferred_location" type="text" placeholder="location"/>
-                <p v-if="form.errors.preferred_location">{{ form.errors.preferred_location}}</p>
-            </div>
+            <!-- fix error output -->
+            <InputField v-model="form.title" label="Title" type="text" :error="form.errors.title" />
 
-            <div>
-                <label>duration</label>
-                <input v-model="form.duration_min" type="text" placeholder="duration"/>
-                <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
-            </div>
+            <InputTextBox v-model="form.description" label="description" :error="form.errors.description" />
 
-            <div>
-                <label>status</label>
-                <input v-model="form.status" type="text" placeholder="status"/>
-                <p v-if="form.errors.status">{{ form.errors.status }}</p>
-            </div>
+            <InputField v-model="form.preferred_location" label="preferred location" type="text" :error="form.errors.preferred_location" />
+
+            <InputField v-model="form.duration_min" label="duration in min." type="number" :error="form.errors.duration_min" />
+
+            <InputField v-model="form.status" label="Status" type="text" :error="form.errors.status" />
 
             <!-- postable specific -->
 
@@ -108,6 +82,13 @@ const sendUpdate = () => {
                     <input v-model="form.supplies" :value="supply.id" type="checkbox" class="hidden peer" />
                     <div class="p-2 rounded-full peer-checked:bg-lime-300">{{ supply.name }}</div>
                 </label>
+            </div>
+            <hr class="border-black" />
+            {{ form.supplies }}
+            <hr class="border-black" />
+            <div class="flex flex-wrap gap-1">
+                testing component supplies
+                <Option v-for="supply in supplies" v-model="form.supplies" :key="supply.id" :option="supply"/>
             </div>
 
             {{ form.categories }}

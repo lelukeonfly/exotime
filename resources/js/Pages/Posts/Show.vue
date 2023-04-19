@@ -45,9 +45,18 @@ const delPost = () => {
             </div>
             <!-- /PROFILE -->
             <h1 class="text-6xl">{{ post.title }}</h1>
-            add a colored dot here and background color
-            <div class="flex justify-between">
-                <div class="rounded-full bg-lime-500 p-2">(colored dot){{ post.status }} -> (in_progress, open, closed)</div>
+            <div class="flex justify-between mt-4">
+
+                <div v-if="post.status == 'open'" class="rounded-full bg-lime-200 p-2">
+                    <span class="inline-block h-3 w-3 bg-lime-500 rounded-full"></span>
+                    open
+                </div>
+
+                <div v-if="post.status == 'closed'" class="rounded-full bg-rose-200 p-2">
+                    <span class="inline-block h-3 w-3 bg-rose-500 rounded-full"></span>
+                    closed
+                </div>
+
             </div>
             <div class="my-3 border-b-1 bg-gradient-to-r from-black via-transparent to-transparent h-[1px]"></div>
             <p class="text-2xl">{{ post.description }}</p>

@@ -1,4 +1,5 @@
 <script setup>
+import AppLayout from '../../Layouts/AppLayout.vue';
 import Post from '../../Components/Post.vue';
 
 const props = defineProps({
@@ -15,3 +16,9 @@ const props = defineProps({
         </div>
     </main>
 </template>
+
+<script>
+export default {
+    layout: AppLayout
+}
+</script>

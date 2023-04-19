@@ -29,7 +29,7 @@ class PostFactory extends Factory
             'description' => $this->faker->paragraph(),
             'duration_min' => $this->faker->numberBetween(15,120),
             'preferred_location' => $this->faker->word(),
-            'status' => $this->faker->word(),
+            'status' => $this->faker->randomElement(['open','closed']),
             'postable_id' => $postable->id,
             'postable_type' => get_class($postable),
         ];
