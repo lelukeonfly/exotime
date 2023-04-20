@@ -1,7 +1,7 @@
 <script setup>
 
     const props = defineProps({
-        modelValue: [String,Number],
+        modelValue: String,
         label: String,
         error: String,
         type: String
