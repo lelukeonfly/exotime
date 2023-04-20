@@ -17,11 +17,12 @@ login page:
 posts:
 - [] for create route make redirect to either service or demand with choice
 - [] update parent time from service and demand (check docs: https://laravel.com/docs/9.x/eloquent-relationships#touching-parent-timestamps) and maybe remove child timestamps
-- optional location
+- [x] optional location
 - filter nearby
 - remember
-- activ oder inactiv
+- [x] activ oder inactiv
 - delete ineherits with post
+- resize posts smaller and add user profile card on right side and leave comments full width
 
 services
 -inherits from post
@@ -49,11 +50,5 @@ admin:
 - posts
 - categories
 ...
-
-  manage:
-    - users
-    - posts
-    - categories
-    ...
 
 see bad words used by users in conversation

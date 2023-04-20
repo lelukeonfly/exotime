@@ -17,7 +17,7 @@ class FeedbackFactory extends Factory
     public function definition()
     {
         return [
-            'rating' => rand(0, 10),
+            'rating' => rand(1, 5),
             'feedback' => $this->faker->text(),
         ];
     }

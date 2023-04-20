@@ -19,7 +19,7 @@ const delPost = () => {
 </script>
 <template>
     <main class="p-6 container max-w-7xl mx-auto">
-        <div class="flex justify-between mb-5">
+        <div class="flex justify-between mb-5 bg-white p-3 px-5 rounded-lg">
             <div>
                 <DirectButton routeURL="posts.index" content="Back" color="lime-500"/>
             </div>
@@ -44,45 +44,48 @@ const delPost = () => {
                 </div>
             </div>
             <!-- /PROFILE -->
-            <h1 class="text-6xl">{{ post.title }}</h1>
-            <div class="flex justify-between mt-4">
+            <div class="bg-gray-100 rounded-lg my-3 p-3">
+                <h1 class="text-6xl">{{ post.title }}</h1>
+                <div class="flex justify-between mt-4">
 
-                <div v-if="post.status == 'open'" class="rounded-full bg-lime-200 p-2">
-                    <span class="inline-block h-3 w-3 bg-lime-500 rounded-full"></span>
-                    open
+                    <div v-if="post.status == 'open'" class="rounded-full bg-lime-200 p-2">
+                        <span class="inline-block h-3 w-3 bg-lime-500 rounded-full"></span>
+                        open
+                    </div>
+
+                    <div v-if="post.status == 'closed'" class="rounded-full bg-rose-200 p-2">
+                        <span class="inline-block h-3 w-3 bg-rose-500 rounded-full"></span>
+                        closed
+                    </div>
+
                 </div>
 
-                <div v-if="post.status == 'closed'" class="rounded-full bg-rose-200 p-2">
-                    <span class="inline-block h-3 w-3 bg-rose-500 rounded-full"></span>
-                    closed
+                <p class="my-5 text-2xl">{{ post.description }}</p>
+            </div>
+
+            <div class="bg-gray-100 rounded-lg p-5">
+                <div class="inline-block">
+                    <h2 class="text-3xl">Supplies</h2>
+                    <ul>
+                        <li v-for="supply in post.supplies" :key="supply.id" class="list-inside list-disc text-xl">{{supply.name}}</li>
+                    </ul>
                 </div>
 
-            </div>
-            <div class="my-3 border-b-1 bg-gradient-to-r from-black via-transparent to-transparent h-[1px]"></div>
-            <p class="text-2xl">{{ post.description }}</p>
+                <!-- postable specific -->
+                <Service v-if="post.postable_type=='App\\Models\\Service'" :postable="post.postable" />
+                <Demand v-if="post.postable_type=='App\\Models\\Demand'" :postable="post.postable" />
 
-            <div class="my-3 border-b-1 bg-gradient-to-r from-transparent via-transparent to-black h-[1px]"></div>
-            <div class="inline-block">
-                <h2 class="text-3xl">Supplies</h2>
-                <ul>
-                    <li v-for="supply in post.supplies" :key="supply.id" class="list-inside list-disc text-xl">{{supply.name}}</li>
-                </ul>
-            </div>
+                <div class="flex justify-between text-xl mt-8">
 
-            <!-- postable specific -->
-            <Service v-if="post.postable_type=='App\\Models\\Service'" :postable="post.postable" />
-            <Demand v-if="post.postable_type=='App\\Models\\Demand'" :postable="post.postable" />
-
-            <div class="flex justify-between">
-
-                <div class="my-auto">Preferred location: {{ post.preferred_location }}</div>
-                <div class="my-auto">Estimated time: {{ post.duration_min }} min</div>
+                    <div class="my-auto">Preferred location: {{ post.preferred_location }}</div>
+                    <div class="my-auto">Estimated time: {{ post.duration_min }} min</div>
+                </div>
             </div>
         </div>
         <!-- comment section -->
         <div class="mt-5 p-5 bg-white rounded-lg grid gap-5">
 
-            <CreateFeedback parent_model="Post" :parent_id="post.id"/>
+            <CreateFeedback parent_model="Post" :parent_id="post.id" class="rounded-lg bg-gray-100 p-3"/>
 
             <div v-for="feedback in post.feedbacks" :key="feedback.id" class="rounded-lg bg-gray-100 p-3">
                 <div class="flex justify-between">
