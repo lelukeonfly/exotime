@@ -3,7 +3,7 @@ import {Link} from '@inertiajs/vue3';
 
     const props = defineProps({
         routeURL: String,
-        model: Object,
+        model: [Number, Object],
         color: String,
         content: String
     })

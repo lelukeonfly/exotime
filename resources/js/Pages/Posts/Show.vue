@@ -77,7 +77,7 @@ const delPost = () => {
 
                 <div class="my-auto">Preferred location: {{ post.preferred_location }}</div>
                 <div class="my-auto">Estimated time: {{ post.duration_min }} min</div>
-        </div>
+            </div>
         </div>
         <!-- comment section -->
         <div class="mt-5 p-5 bg-white rounded-lg grid gap-5">
@@ -90,7 +90,9 @@ const delPost = () => {
                     <div>{{ feedback.created_at }}</div>
                 </div>
                 <!--rating-->
-                <div>{{feedback.rating}}/10</div>
+                <div class="star-rating">
+                    <span class="star" v-for="i in 5" :key="i" :class="{ 'filled': i <= feedback.rating }">&#9733;</span>
+                </div>
                 <div>
                     {{ feedback.feedback }}
                 </div>
@@ -103,3 +105,19 @@ const delPost = () => {
         layout: AppLayout
     }
 </script>
+<style scoped>
+.star-rating {
+    display: flex;
+}
+
+.star {
+    font-size: 2rem;
+    color: #aaa;
+    transition: color 0.2s ease-out;
+    margin-right: 5px;
+}
+
+.star.filled {
+    color: gold;
+}
+</style>

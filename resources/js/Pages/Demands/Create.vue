@@ -3,18 +3,24 @@ import AppLayout from '../../Layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import CreateCategory from '../../Components/CreateCategory.vue';
+import CreateSupply from '../../Components/CreateSupply.vue';
+import Option from '../../Components/Option.vue';
+import InputField from '../../Components/InputField.vue';
+import InputTextBox from '../../Components/InputTextBox.vue';
+import InputStatus from '../../Components/InputStatus.vue';
 
 const props = defineProps({
-    categories: Object
+    categories: Object,
+    supplies: Object
 })
 
 const form = useForm({
     title: '',
     description: '',
-    location: '',
-    duration_min: 0,
-    starting_at: '',
-    ending_at: '',
+    duration_min: null,
+    preferred_location: '',
+    status: '',
+    supplies: [],
     categories: []
 })
 
@@ -27,37 +33,34 @@ const submit = () => {
 </script>
 <template>
     <main class="p-6 container max-w-7xl mx-auto">
-    <Link :href="route('services.index')">back</Link>
+    <Link :href="route('demands.index')">back</Link>
 
     <div>{{form.errors}}</div>
     <form @submit.prevent="submit">
 
-        <input v-model="form.title" type="text" placeholder="Titel"/>
-        <p v-if="form.errors.title">{{ form.errors.title }}</p>
+            <InputField v-model="form.title" label="Title" type="text" :error="form.errors.title" />
 
-        <textarea v-model="form.description" placeholder="description"></textarea>
-        <p v-if="form.errors.description">{{ form.errors.description }}</p>
+            <InputTextBox v-model="form.description" label="description" :error="form.errors.description" />
 
-        <input v-model="form.location" type="text" placeholder="location"/>
-        <p v-if="form.errors.location">{{ form.errors.location}}</p>
+            <InputField v-model="form.preferred_location" label="preferred location" type="text" :error="form.errors.preferred_location" />
 
-        <input v-model="form.duration_min" type="number" placeholder="duration"/>
-        <p v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+            <InputField v-model="form.duration_min" label="duration in min." type="number" :error="form.errors.duration_min" />
 
-        <input v-model="form.starting_at" type="datetime-local" placeholder="stargin at"/>
-        <p v-if="form.errors.starting_at">{{ form.errors.starting_at }}</p>
+            <InputStatus v-model="form.status" label="Status" :error="form.errors.status" />
 
-        <input v-model="form.ending_at" type="datetime-local" placeholder="stargin at"/>
-        <p v-if="form.errors.ending_at">{{ form.errors.ending_at }}</p>
+            category
+            <div class="flex flex-wrap gap-1">
+                <Option v-for="category in categories" v-model="form.categories" :key="category.id" :option="category"/>
+            </div>
+            <CreateCategory/>
+            supplies
+            <div class="flex flex-wrap gap-1">
+                <Option v-for="supply in supplies" v-model="form.supplies" :key="supply.id" :option="supply"/>
+            </div>
 
-        <div v-for="category in categories" :key="category.id">
-            <input v-model="form.categories" :value="category.id" type="checkbox" :id="'_'+category.id">
-            <label :for="'_'+category.id">{{ category.name }}</label>
-        </div>
+            <CreateSupply/>
 
-        <CreateCategory/>
-
-        <button type="submit">submit</button>
+            <button type="submit">submit</button>
     </form>
     </main>
     <p>{{ form }}</p>
