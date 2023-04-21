@@ -8,15 +8,10 @@ import {Link} from '@inertiajs/vue3';
         content: String
     })
 
-const colors = {};
-      colors['hover:bg-' + props.color] = true;
-      colors['text-' + props.color] = true;
-      colors['border-' + props.color] = true;
 </script>
 <template>
     <Link :href="route(routeURL, model)"
-    class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded"
-    :class="colors">
+    class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500">
     {{ content }}
     </Link>
 </template>

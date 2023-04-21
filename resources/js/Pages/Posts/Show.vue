@@ -21,17 +21,17 @@ const delPost = () => {
     <main class="p-6 container max-w-7xl mx-auto">
         <div class="flex justify-between mb-5 bg-white p-3 px-5 rounded-lg">
             <div>
-                <DirectButton routeURL="posts.index" content="Back" color="lime-500"/>
+                <DirectButton routeURL="posts.index" content="Back" />
             </div>
 
             <div class="flex gap-3">
-                <DirectButton routeURL="posts.edit" :model="post.id" content="Edit" color="rose-500"/>
+                <DirectButton routeURL="posts.edit" :model="post.id" content="Edit" />
 
-                <div>
-                    <a @click="delPost">delete</a>
+                <div class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 cursor-pointer">
+                    <a @click="delPost">Delete</a>
                 </div>
 
-                <DirectButton routeURL="posts.destroy" :model="post" content="Delete" color="red-500"/>
+
             </div>
         </div>
 
@@ -64,10 +64,12 @@ const delPost = () => {
             </div>
 
             <div class="bg-gray-100 rounded-lg p-5">
-                <div class="inline-block">
+                <div v-if="post.supplies.length" class="inline-block">
                     <h2 class="text-3xl">Supplies</h2>
-                    <ul>
-                        <li v-for="supply in post.supplies" :key="supply.id" class="list-inside list-disc text-xl">{{supply.name}}</li>
+                    <ul class="mt-3">
+                        <li v-for="supply in post.supplies" :key="supply.id" class="list-inside list-disc my-4">
+                            <span class="text-xl bg-gray-200 rounded-lg px-2 py-1">{{supply.name}}</span>
+                        </li>
                     </ul>
                 </div>
 
@@ -79,6 +81,15 @@ const delPost = () => {
 
                     <div class="my-auto">Preferred location: {{ post.preferred_location }}</div>
                     <div class="my-auto">Estimated time: {{ post.duration_min }} min</div>
+                </div>
+            </div>
+
+            <div v-if="post.categories.length" class="mt-3 bg-gray-100 rounded-lg p-5">
+                <h2 class="text-3xl">Categories</h2>
+                <div class="mt-5 flex flex-wrap gap-1">
+                    <label v-for="category in post.categories" class="text-xs bg-gray-200 rounded-full hover cursor-pointer" :key="category.id">
+                        <div class="p-2 rounded-full bg-lime-300">{{ category.name }}</div>
+                    </label>
                 </div>
             </div>
         </div>

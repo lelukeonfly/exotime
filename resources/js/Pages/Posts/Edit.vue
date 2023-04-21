@@ -40,7 +40,7 @@ const sendUpdate = () => {
 
     <main class="p-6 container max-w-7xl mx-auto">
 
-        <DirectButton routeURL="posts.index" color="red-500" content="back" class="inline-block"/>
+        <DirectButton routeURL="posts.index" color="red-500" content="Back" class="inline-block"/>
 
         <p>{{ post.user.username }}</p>
         <p>{{ post.created_at }}</p>
