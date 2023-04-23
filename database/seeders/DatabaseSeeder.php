@@ -27,18 +27,23 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->withPosts()->withBans()->create();
 
         Post::get()->map(
-            fn($p) => $p->supplies()->attach(Supply::inRandomOrder()->take(3)->pluck('id')->toArray())
+            fn($p) => $p->supplies()->attach(
+                Supply::inRandomOrder()->take(3)->pluck('id')->toArray()
+            )
         );
 
         Post::get()->map(
-            fn ($post) => $post->categories()->attach(Category::inRandomOrder()->take(3)->pluck('id')->toArray())
+            fn ($post) => $post->categories()->attach(
+                Category::inRandomOrder()->take(3)->pluck('id')->toArray()
+            )
         );
 
 
         User::get()->map(
             fn ($user) => collect(range(1, 3))->map(
                 fn () => Feedback::factory()->create([
-                    'user_id' => User::where('id', '!=', $user->id)->inRandomOrder()->first()->id,
+                    'user_id' => User::where('id', '!=', $user->id)
+                    ->inRandomOrder()->first()->id,
                     'feedbackable_id' => $user->id,
                     'feedbackable_type' => 'App\Models\User',
                 ])
@@ -54,5 +59,17 @@ class DatabaseSeeder extends Seeder
                 ])
             )
         );
+
+        Post::inRandomOrder()->take(15)->get()->map(function($post) {
+            $post->requestedByUsers()->attach(
+                User::inRandomOrder()->first()->id,
+                ['status' =>
+                    ['pending',
+                    'accepted',
+                    'rejected']
+                    [rand(0,2)]]
+            );
+        });
+
     }
 }

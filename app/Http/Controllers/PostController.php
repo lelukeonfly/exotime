@@ -58,8 +58,9 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->load(['postable', 'categories', 'supplies', 'user', 'feedbacks.user']);
+        $requesters = $post->requestedByUsers()->where('status','pending')->get();
 
-        return Inertia::render('Posts/Show', compact('post'));
+        return Inertia::render('Posts/Show', compact(['post','requesters']));
     }
 
     /**

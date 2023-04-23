@@ -15,10 +15,26 @@ class Post extends Model
         'description',
         'duration_min',
         'preferred_location',
-        'status',
         'postable_id',
         'postable_type',
     ];
+
+
+    public function requestedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'post_user')
+        ->withPivot('status');
+    }
+
+    public function acceptRequest($user_id)
+    {
+        $this->requestedByUsers()->updateExistingPivot($user_id, ['status' => 'accepted']);
+    }
+
+    public function rejectRequest($user_id)
+    {
+        $this->requestedByUsers()->updateExistingPivot($user_id, ['status' => 'rejected']);
+    }
 
     public function supplies() {
         return $this->belongsToMany(Supply::class);

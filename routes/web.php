@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DemandController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostRequestController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplyController;
 use App\Models\Category;
@@ -61,6 +62,12 @@ Route::middleware([
     Route::resource('demands', DemandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('supplies', SupplyController::class);
-    Route::resource('feedbacks', FeedbackController::class);
+    Route::resource('feedbacks', FeedbackController::class)->only(['store','destroy']);
     Route::get('banned', BanController::class);
+
+    Route::prefix('posts')->group(function(){
+        Route::post('/{postId}/request/create', [PostRequestController::class, 'storeRequest'])->name('storeRequest');
+        Route::put('/{postId}/request/{userId}/accept', [PostRequestController::class, 'acceptRequest'])->name('acceptRequest');
+        Route::put('/{postId}/request/{userId}/reject', [PostRequestController::class, 'rejectRequest'])->name('rejectRequest');
+    });
 });

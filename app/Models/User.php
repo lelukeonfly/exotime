@@ -17,17 +17,17 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array<int, string>
-   */
-  protected $fillable = [
-    'name',
-    'username',
-    'email',
-    'password',
-  ];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'username',
+        'email',
+        'password',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -64,14 +64,20 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function requestedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'post_user')
+    ->withPivot('status');
+    }
+
     public function feedbacks()
     {
-      return $this->morphMany(Feedback::class, 'feedbackable');
+        return $this->morphMany(Feedback::class, 'feedbackable');
     }
 
     public function bans()
     {
-      return $this->hasMany(Ban::class)->orderBy('created_at', 'desc');
+        return $this->hasMany(Ban::class)->orderBy('created_at', 'desc');
     }
 
     public function bannable()
