@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['postable', 'user', 'categories'])->get();
+        $posts = Post::with(['postable', 'user', 'categories'])->whereNot('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Posts/Index', compact('posts'));
     }
@@ -59,8 +59,9 @@ class PostController extends Controller
     {
         $post->load(['postable', 'categories', 'supplies', 'user', 'feedbacks.user']);
         $requesters = $post->requestedByUsers()->where('status','pending')->get();
+        $login_user_id = auth()->user()->id;
 
-        return Inertia::render('Posts/Show', compact(['post','requesters']));
+        return Inertia::render('Posts/Show', compact(['post','requesters','login_user_id']));
     }
 
     /**
@@ -71,6 +72,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         $post->load(['postable', 'categories', 'supplies', 'user']);
         $categories = Category::all();
         $supplies = Supply::all();
@@ -92,6 +95,8 @@ class PostController extends Controller
         Post $post
     )
     {
+
+        $this->authorize('update', $post);
 
         $postable = $post->postable;
         $post->fill($postRequest->only([
@@ -129,6 +134,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $post->delete();
         return redirect()->route('posts.index');
     }

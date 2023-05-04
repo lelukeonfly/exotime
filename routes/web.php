@@ -62,12 +62,12 @@ Route::middleware([
     Route::resource('demands', DemandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('supplies', SupplyController::class);
-    Route::resource('feedbacks', FeedbackController::class)->only(['store','destroy']);
+    Route::resource('feedbacks', FeedbackController::class);
     Route::get('banned', BanController::class);
 
     Route::prefix('posts')->group(function(){
-        Route::post('/{postId}/request/create', [PostRequestController::class, 'storeRequest'])->name('storeRequest');
-        Route::put('/{postId}/request/{userId}/accept', [PostRequestController::class, 'acceptRequest'])->name('acceptRequest');
-        Route::put('/{postId}/request/{userId}/reject', [PostRequestController::class, 'rejectRequest'])->name('rejectRequest');
+        Route::post('/{post}/request/create', [PostRequestController::class, 'storeRequest'])->name('storeRequest');
+        Route::put('/{post}/request/{user}/accept', [PostRequestController::class, 'acceptRequest'])->name('acceptRequest');
+        Route::put('/{post}/request/{user}/reject', [PostRequestController::class, 'rejectRequest'])->name('rejectRequest');
     });
 });

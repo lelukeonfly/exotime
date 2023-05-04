@@ -23,18 +23,18 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
         Supply::factory(30)->create();
 
-        User::factory(['email' => 'lukas@moessler.com'])->withPosts()->create();
+        User::factory(['email' => 'lukas@moessler.com', 'username' => 'leluke'])->withPosts()->create();
         User::factory(10)->withPosts()->withBans()->create();
 
         Post::get()->map(
             fn($p) => $p->supplies()->attach(
-                Supply::inRandomOrder()->take(3)->pluck('id')->toArray()
+                Supply::inRandomOrder()->take(5)->pluck('id')->toArray()
             )
         );
 
         Post::get()->map(
             fn ($post) => $post->categories()->attach(
-                Category::inRandomOrder()->take(3)->pluck('id')->toArray()
+                Category::inRandomOrder()->take(5)->pluck('id')->toArray()
             )
         );
 

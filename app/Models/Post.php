@@ -13,6 +13,7 @@ class Post extends Model
         'user_id',
         'title',
         'description',
+        'status',
         'duration_min',
         'preferred_location',
         'postable_id',
@@ -26,14 +27,14 @@ class Post extends Model
         ->withPivot('status');
     }
 
-    public function acceptRequest($user_id)
+    public function acceptRequest(User $user)
     {
-        $this->requestedByUsers()->updateExistingPivot($user_id, ['status' => 'accepted']);
+        $this->requestedByUsers()->updateExistingPivot($user, ['status' => 'accepted']);
     }
 
-    public function rejectRequest($user_id)
+    public function rejectRequest(User $user)
     {
-        $this->requestedByUsers()->updateExistingPivot($user_id, ['status' => 'rejected']);
+        $this->requestedByUsers()->updateExistingPivot($user, ['status' => 'rejected']);
     }
 
     public function supplies() {

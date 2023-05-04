@@ -9,8 +9,9 @@ use App\Models\User;
 class PostRequestController extends Controller
 {
 
-    public function storeRequest($postId){
-        $post = Post::find($postId);
+    public function storeRequest(Post $post){
+        $this->authorize('makeRequest', $post);
+
         $user = auth()->user();
 
         if ($post && $user) {
@@ -21,10 +22,9 @@ class PostRequestController extends Controller
 
     }
 
-    public function acceptRequest($postId, $userId)
+    public function acceptRequest(Post $post, User $user)
     {
-        $post = Post::find($postId);
-        $user = User::find($userId);
+        $this->authorize('acceptRequest', $post);
 
         if ($post && $user) {
             $post->requestedByUsers()->updateExistingPivot($user->id, ['status' => 'accepted']);
@@ -32,14 +32,12 @@ class PostRequestController extends Controller
 
     }
 
-    public function rejectRequest($postId, $userId)
+    public function rejectRequest(Post $post, User $user)
     {
-        $post = Post::find($postId);
-        $user = User::find($userId);
+        $this->authorize('rejectRequest', $post);
 
         if ($post && $user) {
             $post->requestedByUsers()->updateExistingPivot($user->id, ['status' => 'rejected']);
-
         }
     }
 }

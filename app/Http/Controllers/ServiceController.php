@@ -22,10 +22,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //$services = Service::with(['post.categories','post.user'])->get();
-
-        //return Inertia::render('Services/Index', compact('services'));
-        $services = Post::where('postable_type', 'App\Models\Service')->with(['postable', 'categories', 'user'])->get();
+        $services = Post::where('postable_type', 'App\Models\Service')->whereNot('user_id', auth()->user()->id)->with(['postable', 'categories', 'user'])->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Services/Index', compact('services'));
     }

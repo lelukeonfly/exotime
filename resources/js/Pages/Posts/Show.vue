@@ -9,6 +9,7 @@ import CreateFeedback from '../../Components/CreateFeedback.vue';
 import {Link, router} from '@inertiajs/vue3';
 
 const props = defineProps({
+    login_user_id: Number,
     post: Object,
     requesters: Object
 })
@@ -22,11 +23,11 @@ const storeRequest = () => {
 }
 
 const acceptRequest = (user_id) => {
-    router.put(route('acceptRequest', {postId:props.post.id, userId:user_id}))
+    router.put(route('acceptRequest', {post:props.post.id, user:user_id}))
 }
 
 const rejectRequest = (user_id) => {
-    router.put(route('rejectRequest', {postId:props.post.id, userId:user_id}))
+    router.put(route('rejectRequest', {post:props.post.id, user:user_id}))
 }
 
 </script>
@@ -37,7 +38,7 @@ const rejectRequest = (user_id) => {
                 <DirectButton routeURL="posts.index" content="Back" />
             </div>
 
-            <div class="flex gap-3">
+            <div v-if="login_user_id == post.user_id" class="flex gap-3">
                 <DirectButton routeURL="posts.edit" :model="post.id" content="Edit" />
 
                 <div class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 cursor-pointer">
@@ -49,11 +50,20 @@ const rejectRequest = (user_id) => {
         </div>
 
         <div class="flex flex-wrap gap-3">
-            <div class="flex gap-3 w-full">
+            <div class="flex flex-wrap md:flex-nowrap gap-3 w-full">
 
                 <div class="p-5 bg-white rounded-lg w-full">
-                    <div class="flex flex-wrap justify-between" @click.stop>
-                        <UserLink :user="post.user" class="mb-3"/>
+                    <div class="flex flex-wrap justify-between items-center" @click.stop>
+                        <UserLink :user="post.user" class="my-auto" />
+                            <div v-if="post.status == 'open'" class="p-2 rounded-lg bg-lime-200">
+                                <span class="inline-block h-3 w-3 bg-lime-500 rounded-full"></span>
+                                open
+                            </div>
+
+                            <div v-if="post.status == 'closed'" class="p-2 rounded-lg bg-rose-300">
+                                <span class="inline-block h-3 w-3 bg-rose-500 rounded-full"></span>
+                                closed
+                            </div>
                         <div class="my-auto">
                             {{ new Date(post.created_at).toLocaleDateString() }}
                         </div>
@@ -61,20 +71,6 @@ const rejectRequest = (user_id) => {
                     <!-- /PROFILE -->
                     <div class="bg-gray-100 rounded-lg my-3 p-3">
                         <h1 class="text-6xl">{{ post.title }}</h1>
-                        <div class="flex justify-between mt-4">
-
-                            <div v-if="post.status == 'open'" class="rounded-full bg-lime-200 p-2">
-                                <span class="inline-block h-3 w-3 bg-lime-500 rounded-full"></span>
-                                open
-                            </div>
-
-                            <div v-if="post.status == 'closed'" class="rounded-full bg-rose-200 p-2">
-                                <span class="inline-block h-3 w-3 bg-rose-500 rounded-full"></span>
-                                closed
-                            </div>
-
-                        </div>
-
                         <p class="my-5 text-2xl">{{ post.description }}</p>
                     </div>
 
@@ -94,8 +90,7 @@ const rejectRequest = (user_id) => {
                             <Service v-if="post.postable_type=='App\\Models\\Service'" :postable="post.postable" />
                             <Demand v-if="post.postable_type=='App\\Models\\Demand'" :postable="post.postable" />
 
-                            <div class="flex justify-between text-xl mt-8">
-
+                            <div class="flex flex-wrap justify-between text-xl mt-8">
                                 <div class="my-auto">Preferred location: {{ post.preferred_location }}</div>
                                 <div class="my-auto">Estimated time: {{ post.duration_min }} min</div>
                             </div>
@@ -114,7 +109,7 @@ const rejectRequest = (user_id) => {
                     </div>
                 </div>
 
-                <div v-if="requesters.length" class="p-5 bg-white rounded-lg w-1/3">
+                <div v-if="requesters.length && login_user_id == post.user_id" class="p-5 bg-white rounded-lg md:w-1/3 w-full">
                     <div v-for="requester in requesters" :key="requester.id">
                         <div v-if="requester.pivot.status == 'pending'" class="p-3 rounded-lg mt-3 bg-gray-100">
                             <UserLink :user="requester" />
@@ -132,8 +127,7 @@ const rejectRequest = (user_id) => {
                     </div>
                 </div>
             </div>
-            <!--TODO: if post not own-->
-            <div class="p-5 bg-white rounded-lg w-full">
+            <div v-if="post.status == 'open' && login_user_id != post.user_id" class="p-5 bg-white rounded-lg w-full">
                 <button class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 w-full" @click="storeRequest">
                     request
                 </button>

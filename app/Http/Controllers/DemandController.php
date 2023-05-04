@@ -22,7 +22,7 @@ class DemandController extends Controller
      */
     public function index()
     {
-        $demands = Post::where('postable_type', 'App\Models\Demand')->with(['postable', 'categories', 'user'])->get();
+        $demands = Post::where('postable_type', 'App\Models\Demand')->whereNot('user_id', auth()->user()->id)->with(['postable', 'categories', 'user'])->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Demands/Index', compact('demands'));
     }
