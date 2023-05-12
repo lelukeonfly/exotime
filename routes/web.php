@@ -4,6 +4,7 @@ use App\Http\Controllers\BanController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DemandController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\MyPostsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostRequestController;
 use App\Http\Controllers\ServiceController;
@@ -63,6 +64,7 @@ Route::middleware([
     Route::resource('categories', CategoryController::class);
     Route::resource('supplies', SupplyController::class);
     Route::resource('feedbacks', FeedbackController::class);
+    Route::get('myposts', MyPostsController::class)->name('myposts');
     Route::get('banned', BanController::class);
 
     Route::prefix('posts')->group(function(){

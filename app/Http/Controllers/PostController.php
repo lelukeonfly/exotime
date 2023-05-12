@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['postable', 'user', 'categories'])->whereNot('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        $posts = Post::with(['postable', 'user', 'categories'])->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Posts/Index', compact('posts'));
     }
@@ -35,7 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Posts/Create');
     }
 
     /**

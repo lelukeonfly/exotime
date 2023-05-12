@@ -74,15 +74,12 @@ const sendUpdate = () => {
                 <Option v-for="supply in supplies" v-model="form.supplies" :key="supply.id" :option="supply"/>
             </div>
 
-            {{ form.supplies }}
-
             <CreateCategory/>
             <CreateSupply/>
 
             <button type="submit">submit</button>
         </form>
 
-        {{ form }}
     </main>
 </template>
 <style scoped>

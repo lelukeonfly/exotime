@@ -60,15 +60,23 @@ class DatabaseSeeder extends Seeder
             )
         );
 
-        Post::inRandomOrder()->take(15)->get()->map(function($post) {
+        /* Post::inRandomOrder()->get()->map(function($post) { */
+        /*     $post->requestedByUsers()->attach( */
+        /*         User::inRandomOrder()->first()->id, */
+        /*         ['status' => */
+        /*             ['pending', */
+        /*             'accepted', */
+        /*             'rejected'] */
+        /*             [rand(0,2)]] */
+        /*     ); */
+        /* }); */
+        Post::inRandomOrder()->get()->map(function($post) {
+            for($i = 0; $i < 10; $i++){
             $post->requestedByUsers()->attach(
                 User::inRandomOrder()->first()->id,
-                ['status' =>
-                    ['pending',
-                    'accepted',
-                    'rejected']
-                    [rand(0,2)]]
+                ['status' =>'pending']
             );
+            }
         });
 
     }
