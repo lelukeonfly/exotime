@@ -4,8 +4,10 @@ use App\Http\Controllers\BanController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DemandController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\MyPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostRequestController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplyController;
 use App\Models\Category;
@@ -64,6 +66,8 @@ Route::middleware([
     Route::resource('supplies', SupplyController::class);
     Route::resource('feedbacks', FeedbackController::class);
     Route::get('banned', BanController::class);
+    Route::get('myposts', MyPostController::class)->name('myposts');
+    Route::get('requests', RequestController::class)->name('requests');
 
     Route::prefix('posts')->group(function(){
         Route::post('/{post}/request/create', [PostRequestController::class, 'storeRequest'])->name('storeRequest');

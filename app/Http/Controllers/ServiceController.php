@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\StoreSupplyRequest;
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Category;
 use App\Models\Post;
@@ -22,7 +23,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Post::where('postable_type', 'App\Models\Service')->whereNot('user_id', auth()->user()->id)->with(['postable', 'categories', 'user'])->orderBy('created_at', 'desc')->get();
+        $services = Post::where('postable_type', 'App\Models\Service')->with(['postable', 'categories', 'user'])->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Services/Index', compact('services'));
     }
@@ -49,8 +50,6 @@ class ServiceController extends Controller
     public function store(
         StoreServiceRequest $serviceRequest,
         StorePostRequest $postRequest,
-        StoreCategoryRequest $categoryRequest,
-        StoreSupplyRequest $supplyRequest
     )
     {
 
@@ -70,9 +69,9 @@ class ServiceController extends Controller
 
         $post->postable()->associate($service);
 
-        $categories = $categoryRequest->input('categories');
+        $categories = $postRequest->input('categories');
 
-        $supplies = $supplyRequest->input('supplies');
+        $supplies = $postRequest->input('supplies');
 
         $post->save();
 

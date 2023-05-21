@@ -11,8 +11,7 @@
 </script>
 <template>
     <div>
-        <label>{{ label }}</label>
-        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" @input="$emit('update:modelValue', $event.target.value)">{{ modelValue }}</textarea>
+        <textarea class="block w-full rounded-lg bg-transparent text-xl resize-none mt-3" @input="$emit('update:modelValue', $event.target.value)" :placeholder="label">{{ modelValue }}</textarea>
         <p v-if="error">{{ error }}</p>
     </div>
 </template>
