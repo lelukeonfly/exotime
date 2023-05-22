@@ -2,5 +2,5 @@
     import logo from '@/logos/ExoTimeLogo.png';
 </script>
 <template>
-    <img class="w-100" :src="logo" alt="ExoTime Logo"/>
+    <img class="resize-none" :src="logo" alt="ExoTime Logo"/>
 </template>
