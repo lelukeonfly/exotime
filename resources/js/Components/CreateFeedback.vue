@@ -15,7 +15,9 @@
     })
 
     const createFeedback = () => {
-        form.post(route('feedbacks.store'))
+        form.post(route('feedbacks.store'), {preserveScroll:true})
+        form.feedback = ''
+        form.rating = null
     }
 </script>
 <template>

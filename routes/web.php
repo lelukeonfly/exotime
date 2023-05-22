@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\MyPostController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplyController;
 use App\Models\Category;
+use App\Models\Feedback;
+use App\Models\Post;
 use App\Models\User;
 use Database\Seeders\SupplySeeder;
 use Illuminate\Foundation\Application;
@@ -57,13 +60,8 @@ Route::middleware([
     'verified',
     'ban.redirect',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('posts', PostController::class);
     Route::resource('services', ServiceController::class);
