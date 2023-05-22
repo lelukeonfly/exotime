@@ -47,7 +47,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
-            <div>
+            <div class="mt-4">
                 <InputLabel for="username" value="Username" />
                 <TextInput
                     id="username"
@@ -55,7 +55,6 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     required
-                    autofocus
                     autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.username" />
