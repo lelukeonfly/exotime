@@ -7,6 +7,7 @@
         forMe: Object,
         byMe: Object
     })
+
 </script>
 <template>
     <div class="p-6 max-w-7xl mx-auto">

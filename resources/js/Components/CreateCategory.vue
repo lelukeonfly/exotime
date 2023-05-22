@@ -10,7 +10,7 @@ const form = useForm({
 })
 
 const addCategory = () => {
-    router.post(route('categories.store'), form)
+    router.post(route('categories.store'), form, {preserveScroll: true})
     form.name = ''
     form.description = ''
 }

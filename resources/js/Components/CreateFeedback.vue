@@ -25,7 +25,7 @@
         <span class="star cursor-pointer" v-for="i in 5" :key="i" :class="{ 'filled': i <= form.rating }" @click="form.rating = i">&#9733;</span>
     </div>
     <InputTextBox v-model="form.feedback" label="Feedback" :error="form.errors.feedback" />
-    <button type="submit">sumbit</button>
+    <button class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 w-full sm:w-auto mt-3" type="submit">sumbit</button>
     </form>
 </template>
 <style scoped>

@@ -3,15 +3,12 @@
     const props = defineProps({
         modelValue: String,
         label: String,
-        error: String,
-        type: String
+        error: String
     })
 
     defineEmits(["update:modelValue"]);
 </script>
 <template>
-    <div>
-        <textarea class="block w-full rounded-lg bg-transparent text-xl resize-none mt-3" @input="$emit('update:modelValue', $event.target.value)" :placeholder="label">{{ modelValue }}</textarea>
+        <textarea class="block w-full rounded-lg bg-transparent text-xl resize-none m-0 mt-3" @input="$emit('update:modelValue', $event.target.value)" :placeholder="label" :value="modelValue"/>
         <p v-if="error">{{ error }}</p>
-    </div>
 </template>

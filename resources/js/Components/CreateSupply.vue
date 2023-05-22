@@ -8,7 +8,8 @@ const form = useForm({
 })
 
 const addSupply = () => {
-    router.post(route('supplies.store'), form)
+    router.post(route('supplies.store'), form, {preserveScroll: true})
+    form.name = ''
 }
 </script>
 <template>

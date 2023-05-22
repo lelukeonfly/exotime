@@ -44,6 +44,12 @@ Route::get('/', function () {
         'user_online' => DB::table('sessions') ->whereNotNull('user_id') ->distinct() ->count('user_id'),
     ]);
 });
+# feedbacks made by user
+#Feedback::where('user_id', $user->id)->count()
+# feedbacks to my account
+#$user->feedbacks->count()
+# all feedbacks on user posts
+#$totalFeedbacks = Feedback::whereHasMorph('feedbackable', [Post::class], function ($query) use ($user) {$query->where('user_id', $user->id);})->count();
 
 Route::middleware([
     'auth:sanctum',

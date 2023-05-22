@@ -40,17 +40,25 @@ const submit = () => {
 
             <!--InputField v-model="form.title" label="Title" type="text" :error="form.errors.title" /-->
             <input v-model="form.title" type="text" placeholder="Title" class="w-full border-0 border-b-2 text-4xl bg-transparent border-top-none rounded-lg"/>
-            <p v-if="form.errors.title">{{ form.errors.title }}</p>
+            <p class="text-red-500" v-if="form.errors.title">{{ form.errors.title }}</p>
 
             <!--InputTextBox v-model="form.description" label="description" :error="form.errors.description" /-->
             <div class="sm:flex justify-between gap-6 mt-6">
-                <textarea v-model="form.description" rows="6" class="block w-full rounded-lg bg-transparent text-xl resize-none " placeholder="This is the description of the Post..."></textarea>
+                <div class="w-full">
+                    <textarea v-model="form.description" rows="6" class="block w-full rounded-lg bg-transparent text-xl resize-none " placeholder="This is the description of the Post..."></textarea>
+                    <p class="text-red-500" v-if="form.errors.description">{{ form.errors.description }}</p>
+                </div>
                 <div class="grid gap-6 mt-6 sm:mt-0">
 
                     <!--InputField v-model="form.preferred_location" label="preferred location" type="text" :error="form.errors.preferred_location" /-->
+                    <div>
                     <input v-model="form.preferred_location" type="text" placeholder="preferred location" class="w-full text-xl bg-transparent rounded-lg"/>
-                    <input v-model="form.duration_min" type="number" placeholder="estimated duration" class="w-full text-xl bg-transparent rounded-lg"/>
-
+                    <p class="text-red-500" v-if="form.errors.preferred_location">{{ form.errors.preferred_location }}</p>
+                    </div>
+                    <div>
+                    <input v-model="form.duration_min" type="number" placeholder="estimated duration" class="w-full text-xl bg-transparent rounded-lg after:content-['min']"/>
+                    <p class="text-red-500" v-if="form.errors.duration_min">{{ form.errors.duration_min }}</p>
+                    </div>
                     <InputStatus v-model="form.status" label="Status" :error="form.errors.status" />
                 </div>
             </div>
@@ -92,7 +100,6 @@ const submit = () => {
             <button type="submit" class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 mt-6">submit</button>
         </form>
     </main>
-    {{ form.errors }}
 </template>
 <script>
     export default{

@@ -77,12 +77,12 @@ class DatabaseSeeder extends Seeder
             for ($i = 0; $i < 3; $i++) {
                 $post->requestedByUsers()->attach(
                     $user->id,
-                    ['status' =>
-                        ['pending',
-                        'accepted',
-                        'rejected']
-                        [rand(0,2)]]
-                    /* ['status' => 'pending'] */
+                    /* ['status' => */
+                        /* ['pending', */
+                        /* 'accepted', */
+                        /* 'rejected'] */
+                        /* [rand(0,2)]] */
+                    ['status' => 'pending']
                 );
             }
         });
