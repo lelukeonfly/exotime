@@ -15,8 +15,9 @@ class DashboardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke()
     {
+        $postCount = Post::where('user_id', auth()->user()->id)->count();
         # feedbacks made by user
         $userFeedbacksMade = Feedback::where('user_id', auth()->user()->id)->count();
         # feedbacks to my account
@@ -24,6 +25,6 @@ class DashboardController extends Controller
         # all feedbacks on user posts
         $postFeedbacks = Feedback::whereHasMorph('feedbackable', [Post::class], function ($query) {$query->where('user_id', auth()->user()->id);})->count();
 
-        return Inertia::render('Dashboard', compact(['userFeedbacksMade', 'userFeedbacksGot', 'postFeedbacks']));
+        return Inertia::render('Dashboard', compact(['userFeedbacksMade', 'userFeedbacksGot', 'postFeedbacks', 'postCount']));
     }
 }

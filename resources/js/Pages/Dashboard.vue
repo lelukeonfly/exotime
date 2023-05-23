@@ -5,7 +5,8 @@ import Welcome from '@/Components/Welcome.vue';
 const props = defineProps({
     userFeedbacksMade: Number,
     userFeedbacksGot: Number,
-    postFeedbacks: Number
+    postFeedbacks: Number,
+    postCount: Number
 })
 </script>
 
@@ -15,7 +16,7 @@ const props = defineProps({
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          <Welcome :userFeedbacksMade="userFeedbacksMade" :userFeedbacksGot="userFeedbacksGot" :postFeedbacks="postFeedbacks"/>
+          <Welcome :userFeedbacksMade="userFeedbacksMade" :userFeedbacksGot="userFeedbacksGot" :postFeedbacks="postFeedbacks" :postCount="postCount"/>
         </div>
       </div>
     </div>
