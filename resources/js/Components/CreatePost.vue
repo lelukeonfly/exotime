@@ -7,5 +7,5 @@
     })
 </script>
 <template>
-    <Link :href="route(routeURL)" class="bg-slate-200 rounded-xl grid items-center content-center text-center text-2xl shadow">{{ name }}</Link>
+    <Link :href="route(routeURL)" class="bg-blue-900 text-white rounded-xl grid items-center content-center text-center text-2xl shadow min-h-[8em]">{{ name }}</Link>
 </template>

@@ -11,7 +11,7 @@ const props = defineProps([
 </script>
 <template>
     <main class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-6 container max-w-7xl mx-auto">
-        <CreatePost routeURL="demands.create" name="create"/>
+        <CreatePost routeURL="posts.create" name="create"/>
         <div v-for="post in posts" :key="post.id">
             <Post :post="post" :key="post.id" />
         </div>
