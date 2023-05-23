@@ -33,7 +33,7 @@ const submit = () => {
 </script>
 <template>
     <main class="p-6 container max-w-7xl mx-auto">
-        <Link :href="route('categories.index')" class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 mb-3 inline-block">back</Link>
+        <Link :href="route('demands.index')" class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 mb-3 inline-block">back</Link>
 
         <div v-if="form.errors.length">{{form.errors}}</div>
         <form @submit.prevent="submit" class="bg-white rounded-lg p-6">

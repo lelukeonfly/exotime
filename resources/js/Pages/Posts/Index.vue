@@ -16,8 +16,6 @@ const props = defineProps([
             <Post :post="post" :key="post.id" />
         </div>
     </main>
-    <aside>
-    </aside>
 </template>
 <script>
 export default{

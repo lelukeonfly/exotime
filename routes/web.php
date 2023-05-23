@@ -11,15 +11,12 @@ use App\Http\Controllers\PostRequestController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplyController;
+use App\Http\Controllers\UserController;
 use App\Models\Category;
-use App\Models\Feedback;
-use App\Models\Post;
 use App\Models\User;
-use Database\Seeders\SupplySeeder;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 /*
@@ -72,6 +69,7 @@ Route::middleware([
     Route::get('banned', BanController::class);
     Route::get('myposts', MyPostController::class)->name('myposts');
     Route::get('requests', RequestController::class)->name('requests');
+    Route::get('profile/{user}', UserController::class)->name('profile');
 
     Route::prefix('posts')->group(function(){
         Route::post('/{post}/request/create', [PostRequestController::class, 'storeRequest'])->name('storeRequest');

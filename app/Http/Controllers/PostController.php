@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdateDemandRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\UpdateServiceRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Demand;
 use App\Models\Post;
@@ -24,6 +25,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with(['postable', 'user', 'categories'])->orderBy('created_at', 'desc')->get();
+        /* $transformedPosts = PostResource::collection($posts); */
 
         return Inertia::render('Posts/Index', compact('posts'));
     }

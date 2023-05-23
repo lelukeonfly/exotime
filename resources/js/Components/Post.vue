@@ -43,5 +43,8 @@ const props = defineProps({
         <div class="bg-gray-100 rounded-lg p-1" @click.stop>
             <slot />
         </div>
+        <div @click.stop>
+            <slot name="contact"/>
+        </div>
         </Link>
 </template>

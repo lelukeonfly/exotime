@@ -30,6 +30,9 @@
         <div v-for="post in byMe.requested_posts">
             <post :post="post">
             <p class="text-center">{{ post.pivot.status }}</p>
+            <template v-if="post.pivot.status == 'accepted'" v-slot:contact>
+                <a :href="'mailto::/'+post.user.email" >contact: {{ post.user.email }}</a>
+            </template>
             </post>
         </div>
     </div>
