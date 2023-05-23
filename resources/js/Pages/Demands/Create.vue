@@ -19,7 +19,7 @@ const form = useForm({
     description: '',
     duration_min: null,
     preferred_location: '',
-    status: 'online',
+    status: 'open',
     supplies: [],
     categories: []
 })
