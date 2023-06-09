@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         /*         /1* ['status' => 'pending'] *1/ */
         /*     ); */
         /* }); */
-        Post::inRandomOrder()->take(15)->get()->map(function($post) {
+        Post::inRandomOrder()->get()->map(function($post) {
             $user = User::inRandomOrder()->first();
 
             for ($i = 0; $i < 3; $i++) {
