@@ -9,6 +9,10 @@ const props = defineProps({
 </script>
 <template>
         <Link :href="route('posts.show', post.id)" class="flex flex-col gap-3 flex-wrap bg-white rounded-lg p-3 cursor-pointer shadow h-full">
+        <div v-if="post.postable_type == 'App\\Models\\Service'" class="text-center"><i>Service</i></div>
+        <div v-if="post.postable_type == 'App\\Models\\Demand'" class="text-center"><i>Demand</i></div>
+        <div class="bg-gray-100 rounded-lg p-1">
+        </div>
             <!-- PROFILE -->
         <div class="flex flex-wrap justify-between" @click.stop>
             <UserLink :user="post.user"/>
@@ -36,5 +40,11 @@ const props = defineProps({
         </Link>
         </div>
         <!-- /CATEGORIES -->
+        <div class="bg-gray-100 rounded-lg p-1" @click.stop>
+            <slot />
+        </div>
+        <div @click.stop>
+            <slot name="contact"/>
+        </div>
         </Link>
 </template>

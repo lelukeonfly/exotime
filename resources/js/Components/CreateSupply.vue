@@ -8,12 +8,13 @@ const form = useForm({
 })
 
 const addSupply = () => {
-    router.post(route('supplies.store'), form)
+    router.post(route('supplies.store'), form, {preserveScroll: true})
+    form.name = ''
 }
 </script>
 <template>
     <form @submit.prevent="addSupply">
         <InputField type="text" label="Supply name" v-model="form.name" />
-        <button type="submit">Add Supply</button>
+        <button type="submit" class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 mt-3 w-full">Add Supply</button>
     </form>
 </template>

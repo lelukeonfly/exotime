@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\StoreSupplyRequest;
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Category;
 use App\Models\Post;
@@ -49,8 +50,6 @@ class ServiceController extends Controller
     public function store(
         StoreServiceRequest $serviceRequest,
         StorePostRequest $postRequest,
-        StoreCategoryRequest $categoryRequest,
-        StoreSupplyRequest $supplyRequest
     )
     {
 
@@ -70,9 +69,9 @@ class ServiceController extends Controller
 
         $post->postable()->associate($service);
 
-        $categories = $categoryRequest->input('categories');
+        $categories = $postRequest->input('categories');
 
-        $supplies = $supplyRequest->input('supplies');
+        $supplies = $postRequest->input('supplies');
 
         $post->save();
 

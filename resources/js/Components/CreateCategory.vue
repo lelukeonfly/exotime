@@ -10,7 +10,7 @@ const form = useForm({
 })
 
 const addCategory = () => {
-    router.post(route('categories.store'), form)
+    router.post(route('categories.store'), form, {preserveScroll: true})
     form.name = ''
     form.description = ''
 }
@@ -19,6 +19,6 @@ const addCategory = () => {
     <form @submit.prevent="addCategory">
         <InputField type="text" label="Category name" v-model="form.name" />
         <InputTextBox type="text" label="Category description" v-model="form.description" />
-        <button type="submit">Add Category</button>
+        <button type="submit" class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 mt-3 w-full">Add Category</button>
     </form>
 </template>

@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdateDemandRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\UpdateServiceRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Demand;
 use App\Models\Post;

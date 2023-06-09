@@ -55,15 +55,15 @@ const rejectRequest = (user_id) => {
                 <div class="p-5 bg-white rounded-lg w-full">
                     <div class="flex flex-wrap justify-between items-center" @click.stop>
                         <UserLink :user="post.user" class="my-auto" />
-                            <div v-if="post.status == 'open'" class="p-2 rounded-lg bg-lime-200">
-                                <span class="inline-block h-3 w-3 bg-lime-500 rounded-full"></span>
-                                open
-                            </div>
+                        <div v-if="post.status == 'open'" class="p-2 rounded-lg bg-lime-200">
+                            <span class="inline-block h-3 w-3 bg-lime-500 rounded-full"></span>
+                            open
+                        </div>
 
-                            <div v-if="post.status == 'closed'" class="p-2 rounded-lg bg-rose-300">
-                                <span class="inline-block h-3 w-3 bg-rose-500 rounded-full"></span>
-                                closed
-                            </div>
+                        <div v-if="post.status == 'closed'" class="p-2 rounded-lg bg-rose-300">
+                            <span class="inline-block h-3 w-3 bg-rose-500 rounded-full"></span>
+                            closed
+                        </div>
                         <div class="my-auto">
                             {{ new Date(post.created_at).toLocaleDateString() }}
                         </div>
@@ -75,29 +75,28 @@ const rejectRequest = (user_id) => {
                     </div>
 
 
-                    <div class="flex gap-3">
-                        <div class="bg-gray-100 rounded-lg p-5 w-full">
-                            <div v-if="post.supplies.length" class="inline-block">
-                                <h2 class="text-3xl">Supplies</h2>
-                                <ul class="mt-3">
-                                    <li v-for="supply in post.supplies" :key="supply.id" class="list-inside list-disc my-4">
-                                        <span class="text-xl bg-gray-200 rounded-lg px-2 py-1">{{supply.name}}</span>
-                                    </li>
-                                </ul>
+                    <div class="flex flex-wrap sm:flex-nowrap gap-3">
+                        <div class="flex flex-col gap-3 w-full">
+                            <div v-if="post.supplies.length" class="bg-gray-100 rounded-lg p-5">
+                                <div class="inline-block">
+                                    <h2 class="text-3xl">Supplies</h2>
+                                    <ul class="mt-3">
+                                        <li v-for="supply in post.supplies" :key="supply.id" class="list-inside list-disc my-4">
+                                            <span class="text-xl bg-gray-200 rounded-lg px-2 py-1">{{supply.name}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
-                            <!-- postable specific -->
-                            <Service v-if="post.postable_type=='App\\Models\\Service'" :postable="post.postable" />
-                            <Demand v-if="post.postable_type=='App\\Models\\Demand'" :postable="post.postable" />
 
-                            <div class="flex flex-wrap justify-between text-xl mt-8">
+                            <div class="flex flex-wrap justify-between text-xl bg-gray-100 rounded-lg p-5">
                                 <div class="my-auto">Preferred location: {{ post.preferred_location }}</div>
                                 <div class="my-auto">Estimated time: {{ post.duration_min }} min</div>
                             </div>
                         </div>
 
 
-                        <div v-if="post.categories.length" class="bg-gray-100 rounded-lg p-5">
+                        <div v-if="post.categories.length" class="bg-gray-100 rounded-lg p-5 w-full sm:w-auto">
                             <h2 class="text-3xl">Categories</h2>
                             <div class="mt-5 flex flex-wrap gap-1">
                                 <label v-for="category in post.categories" class="text-xs bg-gray-200 rounded-full hover cursor-pointer" :key="category.id">
@@ -107,6 +106,9 @@ const rejectRequest = (user_id) => {
                         </div>
 
                     </div>
+                    <!-- postable specific -->
+                    <!--Service v-if="post.postable_type=='App\\Models\\Service'" :postable="post.postable" />
+                        <Demand v-if="post.postable_type=='App\\Models\\Demand'" :postable="post.postable" /-->
                 </div>
 
                 <div v-if="requesters.length && login_user_id == post.user_id" class="p-5 bg-white rounded-lg md:w-1/3 w-full">

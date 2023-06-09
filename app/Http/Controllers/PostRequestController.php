@@ -35,6 +35,7 @@ class PostRequestController extends Controller
         }
 
         $post->requestedByUsers()->updateExistingPivot($user->id, ['status' => 'accepted']);
+        $post->update(['status' => 'closed']);
 
         return redirect()->back()->with('message', 'Successfully accepted User Request!');
     }

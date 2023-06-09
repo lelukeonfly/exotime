@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import InputTextBox from '@/Components/InputTextBox.vue';
 
 const props = defineProps({
     user: Object,
@@ -18,6 +19,7 @@ const form = useForm({
     name: props.user.name,
     username: props.user.username,
     email: props.user.email,
+    description: props.user.description,
     photo: null,
 });
 
@@ -185,6 +187,19 @@ const clearPhotoFileInput = () => {
                     </div>
                 </div>
             </div>
+
+            <!-- Username -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="description" value="Description" />
+                <InputTextBox
+                    id="description"
+                    v-model="form.description"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <InputError :message="form.errors.description" class="mt-2" />
+            </div>
+
         </template>
 
         <template #actions>

@@ -174,7 +174,11 @@ const logout = () => {
                     </DropdownLink>
 
                     <DropdownLink :href="route('myposts')">
-                    My Posts
+                        My Posts
+                    </DropdownLink>
+
+                    <DropdownLink :href="route('requests')">
+                        My Requests
                     </DropdownLink>
 
                     <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
@@ -257,6 +261,14 @@ const logout = () => {
             <div class="mt-3 space-y-1">
               <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
                 Profile
+              </ResponsiveNavLink>
+
+              <ResponsiveNavLink :href="route('myposts')" :active="route().current('myposts')">
+                My Posts
+              </ResponsiveNavLink>
+
+              <ResponsiveNavLink :href="route('requests')" :active="route().current('requests')">
+                My Requests
               </ResponsiveNavLink>
 
               <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"

@@ -49,11 +49,8 @@ class DemandController extends Controller
     public function store(
         StoreDemandRequest $demandRequest,
         StorePostRequest $postRequest,
-        StoreCategoryRequest $categoryRequest,
-        StoreSupplyRequest $supplyRequest
     )
     {
-
         $demand = new Demand([
         ]);
 
@@ -70,9 +67,9 @@ class DemandController extends Controller
 
         $post->postable()->associate($demand);
 
-        $categories = $categoryRequest->input('categories');
+        $categories = $postRequest->input('categories');
 
-        $supplies = $supplyRequest->input('supplies');
+        $supplies = $postRequest->input('supplies');
 
         $post->save();
 

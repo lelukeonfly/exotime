@@ -24,6 +24,7 @@ posts:
 - delete ineherits with post
 - [x] resize posts smaller and add user profile card on right side and leave comments full width
 - [ ] remove request button on Show.vue when already requested
+- [ ] hide sensitive data (+ backend)
 
 services
 -inherits from post
@@ -53,3 +54,7 @@ admin:
 ...
 
 see bad words used by users in conversation
+
+:::::::::::::
+fonts to grey
+dashboard numbers to bottom

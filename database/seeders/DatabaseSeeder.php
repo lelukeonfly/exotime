@@ -68,14 +68,22 @@ class DatabaseSeeder extends Seeder
         /*             'accepted', */
         /*             'rejected'] */
         /*             [rand(0,2)]] */
+        /*         /1* ['status' => 'pending'] *1/ */
         /*     ); */
         /* }); */
         Post::inRandomOrder()->get()->map(function($post) {
-            for($i = 0; $i < 10; $i++){
-            $post->requestedByUsers()->attach(
-                User::inRandomOrder()->first()->id,
-                ['status' =>'pending']
-            );
+            $user = User::inRandomOrder()->first();
+
+            for ($i = 0; $i < 3; $i++) {
+                $post->requestedByUsers()->attach(
+                    $user->id,
+                    /* ['status' => */
+                        /* ['pending', */
+                        /* 'accepted', */
+                        /* 'rejected'] */
+                        /* [rand(0,2)]] */
+                    ['status' => 'pending']
+                );
             }
         });
 

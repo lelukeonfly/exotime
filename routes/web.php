@@ -2,20 +2,21 @@
 
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\MyPostsController;
+use App\Http\Controllers\MyPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostRequestController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplyController;
+use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\User;
-use Database\Seeders\SupplySeeder;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 /*
@@ -43,6 +44,12 @@ Route::get('/', function () {
         'user_online' => DB::table('sessions') ->whereNotNull('user_id') ->distinct() ->count('user_id'),
     ]);
 });
+# feedbacks made by user
+#Feedback::where('user_id', $user->id)->count()
+# feedbacks to my account
+#$user->feedbacks->count()
+# all feedbacks on user posts
+#$totalFeedbacks = Feedback::whereHasMorph('feedbackable', [Post::class], function ($query) use ($user) {$query->where('user_id', $user->id);})->count();
 
 Route::middleware([
     'auth:sanctum',
@@ -50,13 +57,8 @@ Route::middleware([
     'verified',
     'ban.redirect',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('posts', PostController::class);
     Route::resource('services', ServiceController::class);
@@ -66,6 +68,9 @@ Route::middleware([
     Route::resource('feedbacks', FeedbackController::class);
     Route::get('myposts', MyPostsController::class)->name('myposts');
     Route::get('banned', BanController::class);
+    Route::get('myposts', MyPostController::class)->name('myposts');
+    Route::get('requests', RequestController::class)->name('requests');
+    Route::get('profile/{user}', UserController::class)->name('profile');
 
     Route::prefix('posts')->group(function(){
         Route::post('/{post}/request/create', [PostRequestController::class, 'storeRequest'])->name('storeRequest');
