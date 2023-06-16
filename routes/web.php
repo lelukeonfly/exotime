@@ -5,7 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\MyPostController;
+use App\Http\Controllers\MyPostsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostRequestController;
 use App\Http\Controllers\RequestController;
@@ -68,7 +68,6 @@ Route::middleware([
     Route::resource('feedbacks', FeedbackController::class);
     Route::get('myposts', MyPostsController::class)->name('myposts');
     Route::get('banned', BanController::class);
-    Route::get('myposts', MyPostController::class)->name('myposts');
     Route::get('requests', RequestController::class)->name('requests');
     Route::get('profile/{user}', UserController::class)->name('profile');
 
