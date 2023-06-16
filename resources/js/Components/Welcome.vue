@@ -28,8 +28,8 @@ const props = defineProps({
 
     </div>
     <!-- component -->
-    <div class="max-w-full mx-4 py-6 sm:mx-auto sm:px-6 lg:px-8">
-        <div class="sm:flex sm:space-x-4">
+    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+        <div class="flex gap-3 flex-wrap flex-col md:flex-row md:flex-nowrap">
             <DashboardStat>
                 <template #title>
                     Feedbacks on other users profile by you
