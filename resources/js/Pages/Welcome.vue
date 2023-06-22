@@ -20,10 +20,10 @@ defineProps({
                 <div class="mx-auto flex items-center h-full justify-center text-center">
                     <div>
                         <ApplicationLogo class="w-1/2 mx-auto"/>
-                        <h2 class="text-2xl text-gray-700 mb-8">A community platform for exchanging skills and services</h2>
-                        <div class="flex gap-6 justify-between w-1/4 mx-auto">
-                        <Link :href="route('login')" class="bg-blue-400 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg">Login Now</Link>
-                        <Link :href="route('register')" class="bg-blue-400 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg">Sign Up Now</Link>
+                        <h2 class="text-2xl text-gray-700 mb-8 p-8">A community platform for exchanging skills and services</h2>
+                        <div class="flex gap-12 justify-between w-1/2 mx-auto sm:flex-nowrap flex-wrap align-center">
+                        <Link :href="route('login')" class="bg-blue-400 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg w-full">Login Now</Link>
+                        <Link :href="route('register')" class="bg-blue-400 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg w-full">Sign Up Now</Link>
                     </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ defineProps({
             <footer class="snap-start py-8 bg-gray-50 px-4">
                 <div class="flex flex-col items-center justify-between max-w-4xl mx-auto">
                     <div class="flex mb-6">
-                        <ApplicationLogo class="h-24"/>
+                        <ApplicationLogo />
                     </div>
                     <div class="flex justify-between items-center mb-6">
                         <a class="text-gray-400 hover:text-white mr-4" href="/">Home</a>
