@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -77,3 +78,9 @@ Route::middleware([
         Route::put('/{post}/request/{user}/reject', [PostRequestController::class, 'rejectRequest'])->name('rejectRequest');
     });
 });
+
+Route::post('fastregister', function(){
+    $user = User::factory()->withPosts()->create();
+    Auth::login($user);
+    return redirect()->route('dashboard');
+})->name('fastregister');

@@ -41,7 +41,7 @@ const rejectRequest = (user_id) => {
             <div v-if="login_user_id == post.user_id" class="flex gap-3">
                 <DirectButton routeURL="posts.edit" :model="post.id" content="Edit" />
 
-                <div class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 cursor-pointer">
+                <div class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-[#4d6ed3] border-[#4d6ed3] cursor-pointer">
                     <a @click="delPost">Delete</a>
                 </div>
 
@@ -130,7 +130,7 @@ const rejectRequest = (user_id) => {
                 </div>
             </div>
             <div v-if="post.status == 'open' && login_user_id != post.user_id" class="p-5 bg-white rounded-lg w-full">
-                <button class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-blue-300 border-blue-500 w-full" @click="storeRequest">
+                <button class="block bg-transparent font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded hover:bg-[#4d6ed3] border-[#4d6ed3] w-full" @click="storeRequest">
                     request
                 </button>
             </div>
